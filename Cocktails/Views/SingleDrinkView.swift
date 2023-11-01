@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Make the name more generic
 struct SingleDrinkView: View {
     var drink: any Drinkable
     var body: some View {
@@ -17,16 +18,17 @@ struct SingleDrinkView: View {
                         image
                             .resizable()
                             .frame(width: 250, height: 250)
-                            .mask(LinearGradient(gradient: Gradient(stops: [
-                                .init(color: .black, location: 0),
-                                .init(color: .clear, location: 1),
-                                .init(color: .black, location: 1),
-                                .init(color: .clear, location: 1)
-                            ]), startPoint: .top, endPoint: .bottom))
+//                            .mask(LinearGradient(gradient: Gradient(stops: [
+//                                .init(color: .black, location: 0),
+//                                .init(color: .clear, location: 1),
+//                                .init(color: .black, location: 1),
+//                                .init(color: .clear, location: 1)
+//                            ]), startPoint: .top, endPoint: .bottom))
                             .cornerRadius(15)
                             .padding(.top)
                     } placeholder: {
                         ProgressView()
+                            .frame(width: 250, height: 250)
                     }
                 }
                 Spacer()

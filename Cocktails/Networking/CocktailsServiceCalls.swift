@@ -15,7 +15,8 @@ class CocktailsServiceCalls {
     var nonAlcoholicDrinks: NonAlcoholicDrink?
     var drinkDetails: SelectedDrinkDetails?
     var searchedDrink: SearchedDrinkDetails?
-// link for getting the ingredients by searching by name -> www.thecocktaildb.com/api/json/v1/1/search.php?i=vodka
+    // link for getting the ingredients by searching by name -> www.thecocktaildb.com/api/json/v1/1/search.php?i=vodka
+    //link for getting specific cocktails (Whisky and em) -> www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka
     //MARK: Alcoholic drinks network call
     func getAlcoholicDrinks(completion: @escaping (AlcoholicDrinks) -> Void) {
         guard let url = URL(string: alcoholicDrinkURL) else {

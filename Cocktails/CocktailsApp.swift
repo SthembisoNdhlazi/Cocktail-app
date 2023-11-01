@@ -11,7 +11,11 @@ import SwiftUI
 struct CocktailsApp: App {
     var body: some Scene {
         WindowGroup {
-            LandingView()
+//            let recommendedDrinkViewModel = RecommendedDrinkViewModel()
+//            let alcoholicDrinksViewModel = AlcoholicDrinksViewModel()
+//            let nonAlcoholicDrinksViewModel = NonAlcoholicDrinksViewModel()
+//
+            SidebarComponent(dataProvider: SideBarDataProvider())
         }
     }
 }

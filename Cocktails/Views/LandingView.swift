@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct LandingView: View {
-    @StateObject var recommendedDrinkViewModel = RecommendedDrinkViewModel()
-    @StateObject var alcoholicDrinksViewModel = AlcoholicDrinksViewModel()
+    @StateObject var recommendedDrinkViewModel: RecommendedDrinkViewModel
+    @StateObject var alcoholicDrinksViewModel: AlcoholicDrinksViewModel
+    @StateObject var nonAlcoholicDrinksViewModel: NonAlcoholicDrinksViewModel
     var categories: [DrinkCategories] = [.alcoholic, .nonAlcoholic]
     
     var body: some View {
@@ -39,8 +40,8 @@ struct LandingView: View {
                         .padding(.top)
                     ScrollView (.horizontal) {
                         HStack {
-                            ForEach(alcoholicDrinksViewModel.allAlcoholicDrinks, id: \.self) { alcoholicDrink in
-                                SingleDrinkView(drink: alcoholicDrink)
+                            ForEach(nonAlcoholicDrinksViewModel.nonAlcoholicDrinks, id: \.self) { nonAlcoholicDrink in
+                                SingleDrinkView(drink: nonAlcoholicDrink)
                             }
                         }
                         .padding()
@@ -57,6 +58,10 @@ struct LandingView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LandingView()
+        let recommendedDrinkViewModel = RecommendedDrinkViewModel()
+        let alcoholicDrinksViewModel = AlcoholicDrinksViewModel()
+        let nonAlcoholicDrinksViewModel = NonAlcoholicDrinksViewModel()
+        
+        LandingView(recommendedDrinkViewModel: recommendedDrinkViewModel, alcoholicDrinksViewModel: alcoholicDrinksViewModel, nonAlcoholicDrinksViewModel: nonAlcoholicDrinksViewModel)
     }
 }
