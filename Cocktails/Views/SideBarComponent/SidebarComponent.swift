@@ -14,8 +14,6 @@ struct SidebarComponent<Provider: SideBarConfigurable>: View {
     
     init(dataProvider: Provider) {
         self._dataProvider = StateObject(wrappedValue: dataProvider)
-        index = 3
-        selectedView = dataProvider.categories.first?.view ?? AnyView(EmptyView())
     }
     
     var body: some View {
@@ -23,7 +21,7 @@ struct SidebarComponent<Provider: SideBarConfigurable>: View {
         HStack(spacing: 0) {
             
             VStack {
-                Spacer()
+//                Spacer()
                 Group {
                     
                     ForEach(Array((dataProvider.categories.enumerated())), id: \.offset) { index, category in
@@ -42,13 +40,14 @@ struct SidebarComponent<Provider: SideBarConfigurable>: View {
                         .padding(.top, 80)
                     }
                 }
-                Spacer()
+//                Spacer()
             }
             .padding(.vertical)
             .frame(width: 85)
             .background(Color.clear)
             .onAppear {
                 if let firstView = dataProvider.categories.first?.view {
+                    index = 0
                     selectedView = firstView
                 } else {
                     selectedView = AnyView(EmptyView())
@@ -57,11 +56,18 @@ struct SidebarComponent<Provider: SideBarConfigurable>: View {
             
             GeometryReader { reader in
                 
-                VStack {
-                    Spacer()
-                    selectedView
-                    Spacer()
+                HStack {
+                    Spacer(minLength: reader.size.width * 0.1)
+                    Text("Cocktails")
+                    Spacer(minLength: reader.size.width * 0.5)
                 }
+                .padding(.top, 60)
+                
+                VStack {
+                    selectedView
+                        .padding(.trailing, 5)
+                }
+                .padding(.top, 150)
             }
         }
         .edgesIgnoringSafeArea(.all)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B83D81032AF4AA3400366D0D /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83D81022AF4AA3400366D0D /* GridView.swift */; };
 		B84098642AF2D7F500034859 /* SideBarDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84098632AF2D7F500034859 /* SideBarDataProvider.swift */; };
 		B84098662AF2D98200034859 /* SideBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84098652AF2D98200034859 /* SideBarViewModel.swift */; };
 		B8AA3F832ADEF83E003BA9E2 /* AlcoholicDrinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AA3F822ADEF83E003BA9E2 /* AlcoholicDrinksViewModel.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B83D81022AF4AA3400366D0D /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		B84098632AF2D7F500034859 /* SideBarDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarDataProvider.swift; sourceTree = "<group>"; };
 		B84098652AF2D98200034859 /* SideBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewModel.swift; sourceTree = "<group>"; };
 		B8AA3F822ADEF83E003BA9E2 /* AlcoholicDrinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlcoholicDrinksViewModel.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				B8ADC1542AD29A32005905C7 /* LandingView.swift */,
 				B8ADC1872AD29BFF005905C7 /* SingleDrinkView.swift */,
+				B83D81022AF4AA3400366D0D /* GridView.swift */,
 				B84098672AF2DA2900034859 /* SideBarComponent */,
 			);
 			path = Views;
@@ -356,6 +359,7 @@
 				B84098662AF2D98200034859 /* SideBarViewModel.swift in Sources */,
 				B8AA3F832ADEF83E003BA9E2 /* AlcoholicDrinksViewModel.swift in Sources */,
 				B8ADCC712AF117350092F466 /* NonAlcoholicDrinksViewModel.swift in Sources */,
+				B83D81032AF4AA3400366D0D /* GridView.swift in Sources */,
 				B8ADC1812AD29AAB005905C7 /* Models.swift in Sources */,
 				B8ADC18A2AD29D30005905C7 /* Drink.swift in Sources */,
 				B8ADC1862AD29B1A005905C7 /* DrinkCategories.swift in Sources */,
