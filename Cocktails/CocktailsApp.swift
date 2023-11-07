@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SideBarComponent
 
 @main
 struct CocktailsApp: App {
@@ -15,7 +16,7 @@ struct CocktailsApp: App {
 //            let alcoholicDrinksViewModel = AlcoholicDrinksViewModel()
 //            let nonAlcoholicDrinksViewModel = NonAlcoholicDrinksViewModel()
 //
-            SidebarComponent(dataProvider: SideBarDataProvider())
+            SidebarComponent(dataProvider: SideBarDataProvider(), title: "Cocktails")
         }
     }
 }

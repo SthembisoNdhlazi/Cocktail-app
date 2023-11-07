@@ -1,24 +1,58 @@
 import SwiftUI
 
-struct GridView: View {
-    var drinks: [Drink] = [
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg"),
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg",category: "Alcoholic"),
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg"),
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg"),
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg"),
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg"),
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg"),
-    Drink(drinkName: "Something", image: "https://cdn.loveandlemons.com/wp-content/uploads/2020/07/mojito.jpg")
-    ]
+protocol ItemListView: ObservableObject {
+    var items: [ItemListViewModel] {get set}
+}
+
+struct ItemListViewModel {
+    var imageURLString: String
+    var title: String
+    var subtitle: String
+    var id: UUID = UUID()
+    
+    static func == (lhs: ItemListViewModel, rhs: ItemListViewModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    init(imageURLString: String, title: String, subtitle: String) {
+        self.imageURLString = imageURLString
+        self.title = title
+        self.subtitle = subtitle
+    }
+}
+
+class AlcoholicDrinksDataProvider: ItemListView {
+    @ObservedObject var alcoholicDrinksViewModel = AlcoholicDrinksViewModel()
+    var items: [ItemListViewModel] = []
+    
+    init() {
+        setUpAlcoholicDrinks()
+    }
+    
+    func setUpAlcoholicDrinks() {
+        for drink in alcoholicDrinksViewModel.allAlcoholicDrinks {
+            items.append(ItemListViewModel(imageURLString: drink.image, title: drink.drinkName, subtitle: drink.category ?? ""))
+        }
+    }
+}
+
+struct GridView<Provider: ItemListView>: View {
+    @StateObject var dataProvider: Provider
+    
+    init(dataProvider: Provider) {
+        self._dataProvider = StateObject(wrappedValue: dataProvider)
+    }
     
     var body: some View {
         
         ScrollView {
             VStack {
-                ForEach(drinks, id: \.id) { drink in
+                ForEach(Array((dataProvider.items.enumerated())), id: \.offset) { index, item in
                     HStack {
-                        if let imageURL = URL(string: drink.image) {
+                        if let imageURL = URL(string: item.imageURLString) {
                             AsyncImage(url: imageURL) { image in
                                 image
                                     .resizable()
@@ -33,9 +67,9 @@ struct GridView: View {
                         }
                         Spacer()
                         VStack(alignment: .center, spacing: 5) {
-                            Text(drink.drinkName)
+                            Text(item.title)
                                 .font(.system(size: 16))
-                            Text(drink.category ?? "")
+                            Text(item.subtitle)
                                 .font(.system(size: 13))
                                 .foregroundColor(.black)
                         }
@@ -61,6 +95,7 @@ struct GridView: View {
 
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
-        GridView()
+        let dataProvider = AlcoholicDrinksDataProvider()
+        GridView(dataProvider: dataProvider)
     }
 }
