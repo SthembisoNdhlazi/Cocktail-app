@@ -1,19 +1,19 @@
 import Foundation
 import SwiftUI
 
-class AlcoholicDrinksViewModel: ObservableObject {
+class AlcoholicDrinksViewModel: ItemListViewable {
+
     private var networking = CocktailsServiceCalls()
-    @Published var allAlcoholicDrinks: [Drink] = []
+    @Published var items: [ItemListViewModel] = []
     
     init() {
-        getAlcoholicDrinks()
+        setUpData()
     }
     
-    private func getAlcoholicDrinks() {
+    func setUpData() {
         networking.getAlcoholicDrinks { drinks in
             for drink in drinks.drinks {
-                self.allAlcoholicDrinks.append( Drink(drinkName: drink.strDrink, image: drink.strDrinkThumb))
-                
+                self.items.append(ItemListViewModel(imageURLString: drink.strDrinkThumb, title: drink.strDrink, subtitle: "Alcoholic"))
             }
         }
     }
