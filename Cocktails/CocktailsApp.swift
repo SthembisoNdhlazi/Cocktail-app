@@ -16,7 +16,9 @@ struct CocktailsApp: App {
 //            let alcoholicDrinksViewModel = AlcoholicDrinksViewModel()
 //            let nonAlcoholicDrinksViewModel = NonAlcoholicDrinksViewModel()
 //
-            SidebarComponent(dataProvider: SideBarDataProvider(), title: "Cocktails")
+//            SidebarComponent(dataProvider: SideBarDataProvider(), title: "Cocktails")
+            LandingView()
+            
         }
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct Drink: Drinkable, Identifiable {
-    var id: UUID = UUID()
+    var id: String = UUID().uuidString
     
     var drinkName: String
     
