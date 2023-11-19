@@ -11,7 +11,7 @@ struct LandingView: View {
         NavigationStack(path: $navPath) {
             SidebarComponent(dataProvider: SideBarDataProvider(), title: "Cocktails")
         }
-        
+        .accentColor(.black)
     }
 }
 

@@ -1,22 +1,11 @@
-//
-//  SingleDrinkView.swift
-//  Cocktails
-//
-//  Created by Sthembiso Ndhlazi on 2023/10/08.
-//
-
 import SwiftUI
 
-//Make the name more generic
 struct SingleDrinkView: View {
     @ObservedObject var selectedDrinkViewModel: SelectedDrinkViewModel
     
     var body: some View {
         if let selectedDrink = selectedDrinkViewModel.detailedDrink {
             ScrollView {
-                Text(selectedDrink.drinkName)
-                    .font(.system(.title, design: .default, weight: .bold))
-                    .padding()
                 VStack {
                     if let imageURL = URL(string: selectedDrink.image) {
                         AsyncImage(url: imageURL) { image in
@@ -65,7 +54,7 @@ struct SingleDrinkView: View {
                     }
                     
                     if let instructions = selectedDrink.instructions {
-                        VStack {
+                        HStack {
                             Text("Instructions")
                                 .font(.system(.title2, design: .default, weight: .bold))
                                 .padding()
@@ -75,9 +64,27 @@ struct SingleDrinkView: View {
                                 .padding()
                         }
                     }
+                    Button(action: {
+                        
+                    }) {
+                        Text("Add to favorites")
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .font(.system(size: 18))
+                            .padding()
+                            .foregroundColor(.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                    }
+                    .background(Color.black)
+                    .cornerRadius(25)
+                    .padding()
                 }
                 
             }
+            .navigationTitle(selectedDrink.drinkName)
+            
         } else {
             VStack {
                 ProgressView()
@@ -90,7 +97,16 @@ struct SingleDrinkView: View {
 
 struct SingleDrinkView_Previews: PreviewProvider {
     static var previews: some View {
+        
         let selectedDrinkViewModel = SelectedDrinkViewModel()
         SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
+            .onAppear {
+                selectedDrinkViewModel.detailedDrink = Drink(id: "1",
+                                                             drinkName: "Mojito",
+                                                             glass: "Normal glass",
+                                                             instructions: "Drink",
+                                                             image: "",
+                                                             category: "")
+            }
     }
 }
