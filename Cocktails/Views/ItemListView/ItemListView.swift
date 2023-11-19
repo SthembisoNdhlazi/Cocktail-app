@@ -42,14 +42,14 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                             .foregroundColor(.black)
                                     }
                                     Spacer()
-                                    Button {
-                                        if let foundItemIndex = dataProvider.items.firstIndex(where: {$0.id == item.id}) {
-                                            dataProvider.items[foundItemIndex].isFavourite.toggle()
-                                        }
-                                    } label: {
-                                        Image(systemName: item.isFavourite ? "heart.fill" : "heart")
-                                            .foregroundColor(.black)
-                                    }
+//                                    Button {
+//                                        if let foundItemIndex = dataProvider.items.firstIndex(where: {$0.id == item.id}) {
+//                                            dataProvider.items[foundItemIndex].isFavourite.toggle()
+//                                        }
+//                                    } label: {
+//                                        Image(systemName: item.isFavourite ? "heart.fill" : "heart")
+//                                            .foregroundColor(.black)
+//                                    }
                                     //                            Spacer()
                                 }
                                 .padding(.horizontal)
@@ -62,6 +62,7 @@ struct ItemListView<Provider: ItemListViewable>: View {
                 }
                 .frame(maxWidth: .infinity)
                 .scrollIndicators(.hidden)
+                .padding(.trailing)
             }
         } else {
             ProgressView()
