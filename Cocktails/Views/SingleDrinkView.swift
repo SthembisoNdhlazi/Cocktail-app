@@ -21,49 +21,23 @@ struct SingleDrinkView: View {
                     }
                 }
                 .padding()
-                VStack {
-                    Spacer()
-                    HStack {
-                        Text("Drink name")
-                            .font(.system(.title2, design: .default, weight: .bold))
-                            .padding()
-                        Spacer()
-                        Text(selectedDrink.drinkName)
-                            .padding()
-                    }
+                
+                VStack (alignment: .leading, spacing: 10) {
+                    
+                    categoryAndDetailRow(category: "Drink name", description: selectedDrink.drinkName)
+                    
                     if let glass = selectedDrink.glass {
-                        HStack {
-                            Text("Glass type")
-                                .font(.system(.title2, design: .default, weight: .bold))
-                                .padding()
-                            Spacer()
-                            Text(glass)
-                                .padding()
-                        }
+                        categoryAndDetailRow(category: "Glass type", description: glass)
                     }
                     
                     if let category = selectedDrink.category {
-                        HStack {
-                            Text("Drink category")
-                                .font(.system(.title2, design: .default, weight: .bold))
-                                .padding()
-                            Spacer()
-                            Text(category)
-                                .padding()
-                        }
+                        categoryAndDetailRow(category: "Drink category", description: category)
                     }
                     
                     if let instructions = selectedDrink.instructions {
-                        HStack {
-                            Text("Instructions")
-                                .font(.system(.title2, design: .default, weight: .bold))
-                                .padding()
-                            Spacer()
-                            Text(instructions)
-                                .multilineTextAlignment(.leading)
-                                .padding()
-                        }
+                        categoryAndDetailRow(category: "Instructions", description: instructions)
                     }
+                    
                     Button(action: {
                         
                     }) {
@@ -81,10 +55,11 @@ struct SingleDrinkView: View {
                     .cornerRadius(25)
                     .padding()
                 }
+                .padding()
                 
             }
             .navigationTitle(selectedDrink.drinkName)
-            
+            .scrollIndicators(.hidden)
         } else {
             VStack {
                 ProgressView()
@@ -108,5 +83,15 @@ struct SingleDrinkView_Previews: PreviewProvider {
                                                              image: "",
                                                              category: "")
             }
+    }
+}
+
+extension SingleDrinkView {
+    @ViewBuilder
+    func categoryAndDetailRow(category: String, description: String) -> some View {
+        Text(category)
+            .font(.system(.title2, design: .default, weight: .bold))
+        Text(description)
+            .multilineTextAlignment(.leading)
     }
 }

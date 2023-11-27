@@ -17,10 +17,6 @@ struct LandingView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let recommendedDrinkViewModel = RecommendedDrinkViewModel()
-        let alcoholicDrinksViewModel = AlcoholicDrinksViewModel()
-        let nonAlcoholicDrinksViewModel = NonAlcoholicDrinksViewModel()
-        
         LandingView()
     }
 }

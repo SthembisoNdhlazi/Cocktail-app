@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SthembisoNdhlazi/SideBarComponent",
       "state" : {
-        "revision" : "63fd2c6f972154b34468e1bbfa72524d749af27e",
-        "version" : "1.0.1"
+        "revision" : "60e57d962d1d5b6156a18d115b807cedc51551da",
+        "version" : "1.0.2"
       }
     }
   ],
