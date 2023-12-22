@@ -1,7 +1,10 @@
 import SwiftUI
+import RealmSwift
 
 struct SingleDrinkView: View {
     @ObservedObject var selectedDrinkViewModel: SelectedDrinkViewModel
+    @Environment(\.realm) var realm
+    @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
     
     var body: some View {
         if let selectedDrink = selectedDrinkViewModel.detailedDrink {
@@ -39,7 +42,13 @@ struct SingleDrinkView: View {
                     }
                     
                     Button(action: {
-                        
+                        favoriteDrink.drinkName = selectedDrinkViewModel.detailedDrink?.drinkName ?? ""
+                        favoriteDrink.image = selectedDrinkViewModel.detailedDrink?.image ?? ""
+                        favoriteDrink.category = selectedDrinkViewModel.detailedDrink?.category ?? ""
+                        favoriteDrink.glass = selectedDrinkViewModel.detailedDrink?.glass
+                        favoriteDrink.instructions = selectedDrinkViewModel.detailedDrink?.instructions
+
+                        save()
                     }) {
                         Text("Add to favorites")
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -70,21 +79,21 @@ struct SingleDrinkView: View {
     }
 }
 
-struct SingleDrinkView_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        let selectedDrinkViewModel = SelectedDrinkViewModel()
-        SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
-            .onAppear {
-                selectedDrinkViewModel.detailedDrink = Drink(id: "1",
-                                                             drinkName: "Mojito",
-                                                             glass: "Normal glass",
-                                                             instructions: "Drink",
-                                                             image: "",
-                                                             category: "")
-            }
-    }
-}
+//struct SingleDrinkView_Previews: PreviewProvider {
+//    static var previews: some View {
+//
+//        let selectedDrinkViewModel = SelectedDrinkViewModel()
+//        SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
+//            .onAppear {
+//                selectedDrinkViewModel.detailedDrink = Drink(id: "1",
+//                                                             drinkName: "Mojito",
+//                                                             glass: "Normal glass",
+//                                                             instructions: "Drink",
+//                                                             image: "",
+//                                                             category: "")
+//            }
+//    }
+//}
 
 extension SingleDrinkView {
     @ViewBuilder
@@ -93,5 +102,15 @@ extension SingleDrinkView {
             .font(.system(.title2, design: .default, weight: .bold))
         Text(description)
             .multilineTextAlignment(.leading)
+    }
+}
+
+
+extension SingleDrinkView {
+    func save() {
+      try? realm.write {
+        realm.add(favoriteDrink)
+          print("success")
+      }
     }
 }

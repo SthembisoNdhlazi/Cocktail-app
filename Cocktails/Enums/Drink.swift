@@ -20,4 +20,5 @@ struct Drink: Drinkable, Identifiable {
     
     var category: String?
     
+    var isFavorite: Bool?
 }
