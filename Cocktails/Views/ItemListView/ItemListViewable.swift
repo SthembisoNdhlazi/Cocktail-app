@@ -9,6 +9,7 @@ import Foundation
 
 protocol ItemListViewable: ObservableObject {
     var items: [ItemListViewModel] {get set}
+    var isLoading: Bool {get set}
     func setUpData()
 }
 
@@ -17,7 +18,8 @@ struct ItemListViewModel {
     var title: String
     var subtitle: String
     var id: UUID = UUID()
-    var isFavourite: Bool = false 
+    var isFavourite: Bool? 
+    
     static func == (lhs: ItemListViewModel, rhs: ItemListViewModel) -> Bool {
         lhs.id == rhs.id
     }
@@ -25,9 +27,10 @@ struct ItemListViewModel {
         hasher.combine(id)
     }
     
-    init(imageURLString: String, title: String, subtitle: String) {
+    init(imageURLString: String, title: String, subtitle: String, isFavorite: Bool? = nil) {
         self.imageURLString = imageURLString
         self.title = title
         self.subtitle = subtitle
+        self.isFavourite = isFavorite
     }
 }

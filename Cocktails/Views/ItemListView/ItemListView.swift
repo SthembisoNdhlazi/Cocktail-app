@@ -8,7 +8,7 @@ struct ItemListView<Provider: ItemListViewable>: View {
     }
     
     var body: some View {
-        if !dataProvider.items.isEmpty {
+        if !dataProvider.items.isEmpty && !dataProvider.isLoading {
             NavigationStack {
                 ScrollView {
                     VStack {
@@ -55,7 +55,19 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                 .padding(.horizontal)
                             }
                             .simultaneousGesture(TapGesture().onEnded({ _ in
-                                selectedDrinkViewModel.setUpDrink(with: item.title)
+//                                if let isFavourite = item.isFavourite {
+//                                    selectedDrinkViewModel.detailedDrink = Drink(id: item.id.uuidString,
+//                                                                                 drinkName: item.title,
+//                                                                                 image: item.imageURLString,
+//                                                                                 category: "",
+//                                                                                 isFavorite: isFavourite)
+                                    selectedDrinkViewModel.setUpDrink(with:  Drink(id: item.id.uuidString,
+                                                                                   drinkName: item.title,                   image: item.imageURLString,
+                                                                                   category: item.subtitle,
+                                                                                   isFavorite: item.isFavourite))
+//                                } else {
+//                                    selectedDrinkViewModel.setUpDrink(with: item)
+//                                }
                             }))
                         }
                     }
@@ -64,8 +76,14 @@ struct ItemListView<Provider: ItemListViewable>: View {
                 .scrollIndicators(.hidden)
                 .padding(.trailing)
             }
+        } else if dataProvider.isLoading {
+            VStack {
+                Spacer()
+                ProgressView()
+                Spacer()
+            }
         } else {
-            ProgressView()
+           EmptyStateView(systemImage: "wineglass", emptyStateText: "Looks like you dont have any items...")
         }
     }
 }

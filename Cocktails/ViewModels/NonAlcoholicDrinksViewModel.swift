@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 class NonAlcoholicDrinksViewModel: ItemListViewable {
+    var isLoading: Bool = true
+    
     var networking = CocktailsServiceCalls()
     @Published var items: [ItemListViewModel] = []
     
@@ -22,5 +24,6 @@ class NonAlcoholicDrinksViewModel: ItemListViewable {
                 self.items.append(ItemListViewModel(imageURLString: drink.strDrinkThumb, title: drink.strDrink, subtitle: "Non alcoholic"))
             }
         }
+        isLoading = false
     }
 }

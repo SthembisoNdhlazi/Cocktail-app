@@ -5,6 +5,7 @@ struct SingleDrinkView: View {
     @ObservedObject var selectedDrinkViewModel: SelectedDrinkViewModel
     @Environment(\.realm) var realm
     @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
+    @State var showSuccessToast: Bool = false
     
     var body: some View {
         if let selectedDrink = selectedDrinkViewModel.detailedDrink {
@@ -41,34 +42,18 @@ struct SingleDrinkView: View {
                         categoryAndDetailRow(category: "Instructions", description: instructions)
                     }
                     
-                    Button(action: {
-                        favoriteDrink.drinkName = selectedDrinkViewModel.detailedDrink?.drinkName ?? ""
-                        favoriteDrink.image = selectedDrinkViewModel.detailedDrink?.image ?? ""
-                        favoriteDrink.category = selectedDrinkViewModel.detailedDrink?.category ?? ""
-                        favoriteDrink.glass = selectedDrinkViewModel.detailedDrink?.glass
-                        favoriteDrink.instructions = selectedDrinkViewModel.detailedDrink?.instructions
-
-                        save()
-                    }) {
-                        Text("Add to favorites")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .font(.system(size: 18))
-                            .padding()
-                            .foregroundColor(.white)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.white, lineWidth: 2)
-                            )
-                    }
-                    .background(Color.black)
-                    .cornerRadius(25)
-                    .padding()
+                    addToFavoriteButton(isFavorite: selectedDrink.isFavorite)
                 }
                 .padding()
                 
             }
             .navigationTitle(selectedDrink.drinkName)
             .scrollIndicators(.hidden)
+            .overlay {
+                if showSuccessToast {
+                    ToastView(image: "checkmark", message: "Your drink has been added to your favorites")
+                }
+            }
         } else {
             VStack {
                 ProgressView()
@@ -103,6 +88,40 @@ extension SingleDrinkView {
         Text(description)
             .multilineTextAlignment(.leading)
     }
+    //MARK: Move logic to selectedDrinkViewModel
+    func addToFavoriteButton(isFavorite: Bool?) -> some View {
+        Button(action: {
+            if let isFavorite {
+                if isFavorite {
+                    //remove from realm
+                    selectedDrinkViewModel.detailedDrink?.isFavorite = false
+                }
+            } else {
+                favoriteDrink.drinkName = selectedDrinkViewModel.detailedDrink?.drinkName ?? ""
+                favoriteDrink.image = selectedDrinkViewModel.detailedDrink?.image ?? ""
+                favoriteDrink.category = selectedDrinkViewModel.detailedDrink?.category ?? ""
+                favoriteDrink.glass = selectedDrinkViewModel.detailedDrink?.glass
+                favoriteDrink.instructions = selectedDrinkViewModel.detailedDrink?.instructions
+                favoriteDrink.isFavourite = true
+                selectedDrinkViewModel.detailedDrink?.isFavorite = true
+                save()
+            }
+        }) {
+            
+            Text(isFavorite ?? false ? "Remove from favorites" : "Add to favorites")
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .font(.system(size: 18))
+                .padding()
+                .foregroundColor(.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 25)
+                        .stroke(Color.white, lineWidth: 2)
+                )
+        }
+        .background(Color.black)
+        .cornerRadius(25)
+        .padding()
+    }
 }
 
 
@@ -110,7 +129,10 @@ extension SingleDrinkView {
     func save() {
       try? realm.write {
         realm.add(favoriteDrink)
-          print("success")
+          showSuccessToast = true
+          DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+              showSuccessToast = false
+          }
       }
     }
 }

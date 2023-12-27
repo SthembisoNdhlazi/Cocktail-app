@@ -19,8 +19,10 @@ struct FavoritesView: View {
                 favoriteDrinksVM.items = favoriteDrinks.map({ favDrink in
                     ItemListViewModel(imageURLString: favDrink.image,
                                       title: favDrink.drinkName,
-                                      subtitle: favDrink.category ?? "")
+                                      subtitle: favDrink.category ?? "",
+                                      isFavorite: true)
                 })
+                favoriteDrinksVM.isLoading = false
             }
     }
 }
@@ -32,6 +34,8 @@ struct FavoritesView_Previews: PreviewProvider {
 }
 
 class FavoriteDrinks: ItemListViewable {
+    var isLoading: Bool = true
+    
     var items: [ItemListViewModel] = []
     
     func setUpData() {
