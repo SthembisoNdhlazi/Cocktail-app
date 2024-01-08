@@ -12,7 +12,11 @@ import RealmSwift
 //MARK: We did this because the data didn't reload when you saved to realm
 struct FavoritesView: View {
     @StateObject var favoriteDrinksVM = FavoriteDrinks()
+    
+    @StateObject var realm = RealmPersistence()
+    @StateObject var selectedDrinkViewModel = SelectedDrinkViewModel()
     @ObservedResults(FavoriteDrink.self) var favoriteDrinks
+    
     var body: some View {
         ItemListView(dataProvider: favoriteDrinksVM)
             .onAppear {

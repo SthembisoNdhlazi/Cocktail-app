@@ -55,19 +55,23 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                 .padding(.horizontal)
                             }
                             .simultaneousGesture(TapGesture().onEnded({ _ in
-//                                if let isFavourite = item.isFavourite {
-//                                    selectedDrinkViewModel.detailedDrink = Drink(id: item.id.uuidString,
-//                                                                                 drinkName: item.title,
-//                                                                                 image: item.imageURLString,
-//                                                                                 category: "",
-//                                                                                 isFavorite: isFavourite)
-                                    selectedDrinkViewModel.setUpDrink(with:  Drink(id: item.id.uuidString,
-                                                                                   drinkName: item.title,                   image: item.imageURLString,
-                                                                                   category: item.subtitle,
-                                                                                   isFavorite: item.isFavourite))
-//                                } else {
-//                                    selectedDrinkViewModel.setUpDrink(with: item)
-//                                }
+                                if let isFavourite = item.isFavourite {
+                                    selectedDrinkViewModel.detailedDrink = Drink(
+                                        id: item.id.uuidString,
+                                        drinkName: item.title,
+                                        image: item.imageURLString,
+                                        category: item.subtitle,
+                                        isFavorite: isFavourite)
+                                   
+                                } else {
+                                    selectedDrinkViewModel.setUpDrink(with: Drink(
+                                        id: item.id.uuidString,
+                                        drinkName: item.title,
+                                        image: item.imageURLString,
+                                        category: item.subtitle,
+                                        isFavorite: item.isFavourite
+                                    ))
+                                }
                             }))
                         }
                     }

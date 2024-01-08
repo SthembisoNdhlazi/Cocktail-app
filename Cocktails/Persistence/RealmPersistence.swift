@@ -13,7 +13,8 @@ class RealmPersistence: ObservableObject {
     var realm: Realm?
     @Published var showSuccessToast: Bool = false
     @Published var showRemoveToast: Bool = false
-
+    @ObservedResults(FavoriteDrink.self) var favoriteDrinks
+    
     init() {
       setUpRealm()
     }
@@ -44,13 +45,15 @@ class RealmPersistence: ObservableObject {
 //            let realmObject = try Realm()
             
             try realm?.write {
-                
-                realm?.delete(drink)
-                showRemoveToast = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    self.showRemoveToast = false
+                if let foundItemIndex = favoriteDrinks.firstIndex(where: {$0.drinkName.lowercased() == drink.drinkName.lowercased()}) {
+                    realm?.delete(favoriteDrinks[foundItemIndex])
+                    
+                     showRemoveToast = true
+                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                         self.showRemoveToast = false
+                     }
+                     print("Drink deleted")
                 }
-                print("Drink deleted")
             }
         } catch {
             print("Couldn't delete item \(drink)")

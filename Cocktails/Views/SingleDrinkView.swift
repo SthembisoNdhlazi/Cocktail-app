@@ -3,9 +3,6 @@ import RealmSwift
 
 struct SingleDrinkView: View {
     @ObservedObject var selectedDrinkViewModel: SelectedDrinkViewModel
-//    @Environment(\.realm) var realm
-    @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
-    @ObservedResults(FavoriteDrink.self) var favoriteDrinks
     @StateObject var realm = RealmPersistence()
     
     var body: some View {
@@ -92,23 +89,18 @@ extension SingleDrinkView {
         Text(description)
             .multilineTextAlignment(.leading)
     }
-    //MARK: Move logic to selectedDrinkViewModel
+    
     func addToFavoriteButton(isFavorite: Bool?) -> some View {
         Button(action: {
             if let isFavorite {
                 if isFavorite {
                     //remove from realm
+                    setUpFavoriteDrink()
                     selectedDrinkViewModel.detailedDrink?.isFavorite = false
+                    realm.delete(drink: selectedDrinkViewModel.favoriteDrink)
                 }
             } else {
-                favoriteDrink.drinkName = selectedDrinkViewModel.detailedDrink?.drinkName ?? ""
-                favoriteDrink.image = selectedDrinkViewModel.detailedDrink?.image ?? ""
-                favoriteDrink.category = selectedDrinkViewModel.detailedDrink?.category ?? ""
-                favoriteDrink.glass = selectedDrinkViewModel.detailedDrink?.glass
-                favoriteDrink.instructions = selectedDrinkViewModel.detailedDrink?.instructions
-                favoriteDrink.isFavourite = true
-                selectedDrinkViewModel.detailedDrink?.isFavorite = true
-                realm.save(drink: favoriteDrink)
+                saveToRealm()
             }
         }) {
             
@@ -130,5 +122,20 @@ extension SingleDrinkView {
 
 
 extension SingleDrinkView {
-
+    //MARK: Move logic to selectedDrinkViewModel
+    private func saveToRealm() {
+        setUpFavoriteDrink()
+        selectedDrinkViewModel.detailedDrink?.isFavorite = true
+        realm.save(drink: selectedDrinkViewModel.favoriteDrink)
+    }
+    
+    private func setUpFavoriteDrink() {
+        selectedDrinkViewModel.favoriteDrink.drinkName = selectedDrinkViewModel.detailedDrink?.drinkName ?? ""
+        selectedDrinkViewModel.favoriteDrink.image = selectedDrinkViewModel.detailedDrink?.image ?? ""
+        selectedDrinkViewModel.favoriteDrink.category = selectedDrinkViewModel.detailedDrink?.category ?? ""
+        selectedDrinkViewModel.favoriteDrink.glass = selectedDrinkViewModel.detailedDrink?.glass
+        selectedDrinkViewModel.favoriteDrink.instructions = selectedDrinkViewModel.detailedDrink?.instructions
+        selectedDrinkViewModel.favoriteDrink.isFavourite = true
+    }
+    
 }
