@@ -3,9 +3,10 @@ import RealmSwift
 
 struct SingleDrinkView: View {
     @ObservedObject var selectedDrinkViewModel: SelectedDrinkViewModel
-    @Environment(\.realm) var realm
+//    @Environment(\.realm) var realm
     @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
-    @State var showSuccessToast: Bool = false
+    @ObservedResults(FavoriteDrink.self) var favoriteDrinks
+    @StateObject var realm = RealmPersistence()
     
     var body: some View {
         if let selectedDrink = selectedDrinkViewModel.detailedDrink {
@@ -50,8 +51,11 @@ struct SingleDrinkView: View {
             .navigationTitle(selectedDrink.drinkName)
             .scrollIndicators(.hidden)
             .overlay {
-                if showSuccessToast {
+                if realm.showSuccessToast {
                     ToastView(image: "checkmark", message: "Your drink has been added to your favorites")
+                }
+                if realm.showRemoveToast {
+                    ToastView(image: "checkmark", message: "Your drink has been removed from your favorites")
                 }
             }
         } else {
@@ -104,7 +108,7 @@ extension SingleDrinkView {
                 favoriteDrink.instructions = selectedDrinkViewModel.detailedDrink?.instructions
                 favoriteDrink.isFavourite = true
                 selectedDrinkViewModel.detailedDrink?.isFavorite = true
-                save()
+                realm.save(drink: favoriteDrink)
             }
         }) {
             
@@ -126,13 +130,5 @@ extension SingleDrinkView {
 
 
 extension SingleDrinkView {
-    func save() {
-      try? realm.write {
-        realm.add(favoriteDrink)
-          showSuccessToast = true
-          DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-              showSuccessToast = false
-          }
-      }
-    }
+
 }
