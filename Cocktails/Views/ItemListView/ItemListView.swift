@@ -12,12 +12,13 @@ struct ItemListView<Provider: ItemListViewable>: View {
             NavigationStack {
                 ScrollView {
                     VStack {
-                        ForEach(Array((dataProvider.items.enumerated())), id: \.offset) { index, item in
+                        ForEach(($dataProvider.items), id: \.id) { item in
                             NavigationLink {
+                                //fix this
                                 SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
                             } label: {
                                 HStack {
-                                    if let imageURL = URL(string: item.imageURLString) {
+                                    if let imageURL = URL(string: item.image.wrappedValue) {
                                         AsyncImage(url: imageURL) { image in
                                             image
                                                 .resizable()
@@ -32,11 +33,11 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                     }
                                     Spacer()
                                     VStack(alignment: .center, spacing: 5) {
-                                        Text(item.title)
+                                        Text(item.drinkName.wrappedValue)
                                             .font(.system(size: 16))
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(.black)
-                                        Text(item.subtitle)
+                                        Text(item.category.wrappedValue ?? "-")
                                             .multilineTextAlignment(.center)
                                             .font(.system(size: 13))
                                             .foregroundColor(.black)
@@ -54,23 +55,13 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                 }
                                 .padding(.horizontal)
                             }
+                            //get rid of this
                             .simultaneousGesture(TapGesture().onEnded({ _ in
-                                if let isFavourite = item.isFavourite {
-                                    selectedDrinkViewModel.detailedDrink = Drink(
-                                        id: item.id.uuidString,
-                                        drinkName: item.title,
-                                        image: item.imageURLString,
-                                        category: item.subtitle,
-                                        isFavorite: isFavourite)
+                                if let _ = item.isFavorite.wrappedValue {
+                                    selectedDrinkViewModel.selectedDrink = item.wrappedValue
                                    
                                 } else {
-                                    selectedDrinkViewModel.setUpDrink(with: Drink(
-                                        id: item.id.uuidString,
-                                        drinkName: item.title,
-                                        image: item.imageURLString,
-                                        category: item.subtitle,
-                                        isFavorite: item.isFavourite
-                                    ))
+                                    selectedDrinkViewModel.setUpDrink(with: item.wrappedValue)
                                 }
                             }))
                         }

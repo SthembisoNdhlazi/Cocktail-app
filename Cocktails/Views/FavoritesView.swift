@@ -13,18 +13,21 @@ import RealmSwift
 struct FavoritesView: View {
     @StateObject var favoriteDrinksVM = FavoriteDrinks()
     
-    @StateObject var realm = RealmPersistence()
-    @StateObject var selectedDrinkViewModel = SelectedDrinkViewModel()
+    @State var realm = RealmManager.sharedInstance
+//    @StateObject var selectedDrinkViewModel = SelectedDrinkViewModel()
     @ObservedResults(FavoriteDrink.self) var favoriteDrinks
     
     var body: some View {
         ItemListView(dataProvider: favoriteDrinksVM)
             .onAppear {
                 favoriteDrinksVM.items = favoriteDrinks.map({ favDrink in
-                    ItemListViewModel(imageURLString: favDrink.image,
-                                      title: favDrink.drinkName,
-                                      subtitle: favDrink.category ?? "",
-                                      isFavorite: true)
+                    Drink(id: favDrink.id.description,
+                          drinkName: favDrink.drinkName,
+                          glass: favDrink.glass,
+                          instructions: favDrink.instructions,
+                          image: favDrink.image,
+                          category: favDrink.category,
+                          isFavorite: favDrink.isFavourite)
                 })
                 favoriteDrinksVM.isLoading = false
             }
@@ -40,7 +43,7 @@ struct FavoritesView_Previews: PreviewProvider {
 class FavoriteDrinks: ItemListViewable {
     var isLoading: Bool = true
     
-    var items: [ItemListViewModel] = []
+    var items: [Drink] = []
     
     func setUpData() {
         

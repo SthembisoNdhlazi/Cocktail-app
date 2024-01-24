@@ -15,7 +15,7 @@
       "location" : "https://github.com/realm/realm-swift.git",
       "state" : {
         "branch" : "master",
-        "revision" : "569c656a8494ad03d790fd1075338c1da92d495a"
+        "revision" : "65269e499f882a2f8bc7ebe3e5a36a1ed7be48dc"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SthembisoNdhlazi/SideBarComponent",
       "state" : {
-        "revision" : "60e57d962d1d5b6156a18d115b807cedc51551da",
-        "version" : "1.0.2"
+        "revision" : "c20c848cc0356f8e95d78d9f5e3636a25d4fe22c",
+        "version" : "1.0.3"
       }
     }
   ],

@@ -3,17 +3,24 @@ import RealmSwift
 
 class SelectedDrinkViewModel: ObservableObject {
     var networking = CocktailsServiceCalls()
-    private var selectedDrinkName: String = ""
-    @Published var detailedDrink: Drink?
+//    private var selectedDrinkName: String = ""
+    @Published var selectedDrink: Drink?
     @Published var isLoading: Bool = false
     @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
+    
+    init(selectedDrink: Drink? = nil) {
+        self.selectedDrink = selectedDrink
+        if let selectedDrink = self.selectedDrink {
+            setUpDrink(with: selectedDrink)
+        }
+    }
     
     func setUpDrink(with selectedDrink: Drink) {
         self.isLoading = true
         if !(selectedDrink.isFavorite ?? false) {
             networking.searchForDrink(drinkName: selectedDrink.drinkName) { drink in
                 if let searchedDrink = drink.drinks.first(where: {$0.strDrink.lowercased() == selectedDrink.drinkName.lowercased() }) {
-                    self.detailedDrink = Drink(id: searchedDrink.idDrink,
+                    self.selectedDrink = Drink(id: searchedDrink.idDrink,
                                                drinkName: searchedDrink.strDrink,
                                                glass: searchedDrink.strGlass,
                                                instructions: searchedDrink.strInstructions,
