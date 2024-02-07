@@ -3,8 +3,12 @@ import RealmSwift
 
 struct SingleDrinkView: View {
     //@Inject
-    @ObservedObject var selectedDrinkViewModel: SelectedDrinkViewModel
+    @StateObject var selectedDrinkViewModel: SelectedDrinkViewModel
     var realm = RealmManager.sharedInstance
+    
+    init (selectedDrink: Drink) {
+        self._selectedDrinkViewModel = StateObject(wrappedValue: SelectedDrinkViewModel(selectedDrink: selectedDrink))
+    }
     
     var body: some View {
         if let selectedDrink = selectedDrinkViewModel.selectedDrink {
@@ -65,22 +69,6 @@ struct SingleDrinkView: View {
         }
     }
 }
-
-//struct SingleDrinkView_Previews: PreviewProvider {
-//    static var previews: some View {
-//
-//        let selectedDrinkViewModel = SelectedDrinkViewModel()
-//        SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
-//            .onAppear {
-//                selectedDrinkViewModel.detailedDrink = Drink(id: "1",
-//                                                             drinkName: "Mojito",
-//                                                             glass: "Normal glass",
-//                                                             instructions: "Drink",
-//                                                             image: "",
-//                                                             category: "")
-//            }
-//    }
-//}
 
 extension SingleDrinkView {
     @ViewBuilder

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ItemListView<Provider: ItemListViewable>: View {
     @StateObject var dataProvider: Provider
-    @StateObject var selectedDrinkViewModel = SelectedDrinkViewModel()
+    
     init(dataProvider: Provider) {
         self._dataProvider = StateObject(wrappedValue: dataProvider)
     }
@@ -14,8 +14,8 @@ struct ItemListView<Provider: ItemListViewable>: View {
                     VStack {
                         ForEach(($dataProvider.items), id: \.id) { item in
                             NavigationLink {
-                                //fix this
-                                SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
+                                //maybe this can be an any view that takes in the selected item as a generic thing?
+                                SingleDrinkView(selectedDrink: item.wrappedValue)
                             } label: {
                                 HStack {
                                     if let imageURL = URL(string: item.image.wrappedValue) {
@@ -55,15 +55,6 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                 }
                                 .padding(.horizontal)
                             }
-                            //get rid of this
-                            .simultaneousGesture(TapGesture().onEnded({ _ in
-                                if let _ = item.isFavorite.wrappedValue {
-                                    selectedDrinkViewModel.selectedDrink = item.wrappedValue
-                                   
-                                } else {
-                                    selectedDrinkViewModel.setUpDrink(with: item.wrappedValue)
-                                }
-                            }))
                         }
                     }
                 }

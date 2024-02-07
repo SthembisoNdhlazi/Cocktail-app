@@ -13,7 +13,7 @@ import RealmSwift
 struct FavoritesView: View {
     @StateObject var favoriteDrinksVM = FavoriteDrinks()
     
-    @State var realm = RealmManager.sharedInstance
+//    @State var realm = RealmManager.sharedInstance
 //    @StateObject var selectedDrinkViewModel = SelectedDrinkViewModel()
     @ObservedResults(FavoriteDrink.self) var favoriteDrinks
     
@@ -42,10 +42,21 @@ struct FavoritesView_Previews: PreviewProvider {
 
 class FavoriteDrinks: ItemListViewable {
     var isLoading: Bool = true
-    
+//    var realm = RealmManager.sharedInstance
+//    @ObservedResults(FavoriteDrink.self) var favouriteDrinks
     var items: [Drink] = []
     
+    init() {
+//        setUpData()
+    }
+    
     func setUpData() {
-        
+//        self.items = self.favouriteDrinks.map({Drink(id: $0.id.stringValue,
+//                                                drinkName: $0.drinkName,
+//                                                glass: $0.glass,
+//                                                instructions: $0.instructions,
+//                                                image: $0.image,
+//                                                category: $0.category,
+//                                                isFavorite: $0.isFavourite)})
     }
 }
