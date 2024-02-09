@@ -5,6 +5,7 @@ struct SingleDrinkView: View {
     //@Inject
     @StateObject var selectedDrinkViewModel: SelectedDrinkViewModel
     var realm = RealmManager.sharedInstance
+//    @Environment(\.dismiss) var dismiss
     
     init (selectedDrink: Drink) {
         self._selectedDrinkViewModel = StateObject(wrappedValue: SelectedDrinkViewModel(selectedDrink: selectedDrink))
@@ -91,6 +92,7 @@ extension SingleDrinkView {
             } else {
                 saveToRealm()
             }
+//            dismiss()
         }) {
             
             Text(isFavorite ?? false ? "Remove from favorites" : "Add to favorites")

@@ -14,7 +14,7 @@ struct ItemListView<Provider: ItemListViewable>: View {
                     VStack {
                         ForEach(($dataProvider.items), id: \.id) { item in
                             NavigationLink {
-                                //maybe this can be an any view that takes in the selected item as a generic thing?
+                                //This is why we can't make this its own module
                                 SingleDrinkView(selectedDrink: item.wrappedValue)
                             } label: {
                                 HStack {
@@ -43,15 +43,6 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                             .foregroundColor(.black)
                                     }
                                     Spacer()
-//                                    Button {
-//                                        if let foundItemIndex = dataProvider.items.firstIndex(where: {$0.id == item.id}) {
-//                                            dataProvider.items[foundItemIndex].isFavourite.toggle()
-//                                        }
-//                                    } label: {
-//                                        Image(systemName: item.isFavourite ? "heart.fill" : "heart")
-//                                            .foregroundColor(.black)
-//                                    }
-                                    //                            Spacer()
                                 }
                                 .padding(.horizontal)
                             }

@@ -42,9 +42,9 @@ struct FavoritesView_Previews: PreviewProvider {
 
 class FavoriteDrinks: ItemListViewable {
     var isLoading: Bool = true
-//    var realm = RealmManager.sharedInstance
-//    @ObservedResults(FavoriteDrink.self) var favouriteDrinks
-    var items: [Drink] = []
+    var realm = RealmManager.sharedInstance
+    @ObservedResults(FavoriteDrink.self) var favouriteDrinks
+    @Published var items: [Drink] = []
     
     init() {
 //        setUpData()
