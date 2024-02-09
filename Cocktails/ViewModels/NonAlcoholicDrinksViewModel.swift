@@ -12,7 +12,7 @@ class NonAlcoholicDrinksViewModel: ItemListViewable {
     var isLoading: Bool = true
     
     var networking = CocktailsServiceCalls()
-    @Published var items: [ItemListViewModel] = []
+    @Published var items: [Drink] = []
     
     init() {
         setUpData()
@@ -21,7 +21,7 @@ class NonAlcoholicDrinksViewModel: ItemListViewable {
     func setUpData() {
         networking.getNonAlcoholicDrinks { drinks in
             for drink in drinks.drinks {
-                self.items.append(ItemListViewModel(imageURLString: drink.strDrinkThumb, title: drink.strDrink, subtitle: "Non alcoholic"))
+                self.items.append(Drink(id: drink.idDrink ,drinkName: drink.strDrink, image: drink.strDrinkThumb,category: "Non alcoholic"))
             }
         }
         isLoading = false

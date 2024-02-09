@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ItemListView<Provider: ItemListViewable>: View {
     @StateObject var dataProvider: Provider
-    @StateObject var selectedDrinkViewModel = SelectedDrinkViewModel()
+    
     init(dataProvider: Provider) {
         self._dataProvider = StateObject(wrappedValue: dataProvider)
     }
@@ -12,12 +12,13 @@ struct ItemListView<Provider: ItemListViewable>: View {
             NavigationStack {
                 ScrollView {
                     VStack {
-                        ForEach(Array((dataProvider.items.enumerated())), id: \.offset) { index, item in
+                        ForEach(($dataProvider.items), id: \.id) { item in
                             NavigationLink {
-                                SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
+                                //This is why we can't make this its own module
+                                SingleDrinkView(selectedDrink: item.wrappedValue)
                             } label: {
                                 HStack {
-                                    if let imageURL = URL(string: item.imageURLString) {
+                                    if let imageURL = URL(string: item.image.wrappedValue) {
                                         AsyncImage(url: imageURL) { image in
                                             image
                                                 .resizable()
@@ -32,43 +33,19 @@ struct ItemListView<Provider: ItemListViewable>: View {
                                     }
                                     Spacer()
                                     VStack(alignment: .center, spacing: 5) {
-                                        Text(item.title)
+                                        Text(item.drinkName.wrappedValue)
                                             .font(.system(size: 16))
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(.black)
-                                        Text(item.subtitle)
+                                        Text(item.category.wrappedValue ?? "-")
                                             .multilineTextAlignment(.center)
                                             .font(.system(size: 13))
                                             .foregroundColor(.black)
                                     }
                                     Spacer()
-//                                    Button {
-//                                        if let foundItemIndex = dataProvider.items.firstIndex(where: {$0.id == item.id}) {
-//                                            dataProvider.items[foundItemIndex].isFavourite.toggle()
-//                                        }
-//                                    } label: {
-//                                        Image(systemName: item.isFavourite ? "heart.fill" : "heart")
-//                                            .foregroundColor(.black)
-//                                    }
-                                    //                            Spacer()
                                 }
                                 .padding(.horizontal)
                             }
-                            .simultaneousGesture(TapGesture().onEnded({ _ in
-//                                if let isFavourite = item.isFavourite {
-//                                    selectedDrinkViewModel.detailedDrink = Drink(id: item.id.uuidString,
-//                                                                                 drinkName: item.title,
-//                                                                                 image: item.imageURLString,
-//                                                                                 category: "",
-//                                                                                 isFavorite: isFavourite)
-                                    selectedDrinkViewModel.setUpDrink(with:  Drink(id: item.id.uuidString,
-                                                                                   drinkName: item.title,                   image: item.imageURLString,
-                                                                                   category: item.subtitle,
-                                                                                   isFavorite: item.isFavourite))
-//                                } else {
-//                                    selectedDrinkViewModel.setUpDrink(with: item)
-//                                }
-                            }))
                         }
                     }
                 }

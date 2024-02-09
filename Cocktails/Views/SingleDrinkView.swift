@@ -2,13 +2,17 @@ import SwiftUI
 import RealmSwift
 
 struct SingleDrinkView: View {
-    @ObservedObject var selectedDrinkViewModel: SelectedDrinkViewModel
-    @Environment(\.realm) var realm
-    @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
-    @State var showSuccessToast: Bool = false
+    //@Inject
+    @StateObject var selectedDrinkViewModel: SelectedDrinkViewModel
+    var realm = RealmManager.sharedInstance
+//    @Environment(\.dismiss) var dismiss
+    
+    init (selectedDrink: Drink) {
+        self._selectedDrinkViewModel = StateObject(wrappedValue: SelectedDrinkViewModel(selectedDrink: selectedDrink))
+    }
     
     var body: some View {
-        if let selectedDrink = selectedDrinkViewModel.detailedDrink {
+        if let selectedDrink = selectedDrinkViewModel.selectedDrink {
             ScrollView {
                 VStack {
                     if let imageURL = URL(string: selectedDrink.image) {
@@ -49,11 +53,14 @@ struct SingleDrinkView: View {
             }
             .navigationTitle(selectedDrink.drinkName)
             .scrollIndicators(.hidden)
-            .overlay {
-                if showSuccessToast {
-                    ToastView(image: "checkmark", message: "Your drink has been added to your favorites")
-                }
-            }
+//            .overlay {
+//                if realm.showSuccessToast {
+//                    ToastView(image: "checkmark", message: "Your drink has been added to your favorites")
+//                }
+//                if realm.showRemoveToast {
+//                    ToastView(image: "checkmark", message: "Your drink has been removed from your favorites")
+//                }
+//            }
         } else {
             VStack {
                 ProgressView()
@@ -64,22 +71,6 @@ struct SingleDrinkView: View {
     }
 }
 
-//struct SingleDrinkView_Previews: PreviewProvider {
-//    static var previews: some View {
-//
-//        let selectedDrinkViewModel = SelectedDrinkViewModel()
-//        SingleDrinkView(selectedDrinkViewModel: selectedDrinkViewModel)
-//            .onAppear {
-//                selectedDrinkViewModel.detailedDrink = Drink(id: "1",
-//                                                             drinkName: "Mojito",
-//                                                             glass: "Normal glass",
-//                                                             instructions: "Drink",
-//                                                             image: "",
-//                                                             category: "")
-//            }
-//    }
-//}
-
 extension SingleDrinkView {
     @ViewBuilder
     func categoryAndDetailRow(category: String, description: String) -> some View {
@@ -88,24 +79,20 @@ extension SingleDrinkView {
         Text(description)
             .multilineTextAlignment(.leading)
     }
-    //MARK: Move logic to selectedDrinkViewModel
+    
     func addToFavoriteButton(isFavorite: Bool?) -> some View {
         Button(action: {
             if let isFavorite {
                 if isFavorite {
                     //remove from realm
-                    selectedDrinkViewModel.detailedDrink?.isFavorite = false
+                    setUpFavoriteDrink()
+                    selectedDrinkViewModel.selectedDrink?.isFavorite = false
+                    realm.delete(object: selectedDrinkViewModel.favoriteDrink)
                 }
             } else {
-                favoriteDrink.drinkName = selectedDrinkViewModel.detailedDrink?.drinkName ?? ""
-                favoriteDrink.image = selectedDrinkViewModel.detailedDrink?.image ?? ""
-                favoriteDrink.category = selectedDrinkViewModel.detailedDrink?.category ?? ""
-                favoriteDrink.glass = selectedDrinkViewModel.detailedDrink?.glass
-                favoriteDrink.instructions = selectedDrinkViewModel.detailedDrink?.instructions
-                favoriteDrink.isFavourite = true
-                selectedDrinkViewModel.detailedDrink?.isFavorite = true
-                save()
+                saveToRealm()
             }
+//            dismiss()
         }) {
             
             Text(isFavorite ?? false ? "Remove from favorites" : "Add to favorites")
@@ -126,13 +113,21 @@ extension SingleDrinkView {
 
 
 extension SingleDrinkView {
-    func save() {
-      try? realm.write {
-        realm.add(favoriteDrink)
-          showSuccessToast = true
-          DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-              showSuccessToast = false
-          }
-      }
+    //MARK: Move logic to selectedDrinkViewModel
+    private func saveToRealm() {
+        setUpFavoriteDrink()
+        selectedDrinkViewModel.selectedDrink?.isFavorite = true
+//        realm.save(drink: selectedDrinkViewModel.favoriteDrink)
+        realm.save(object: selectedDrinkViewModel.favoriteDrink)
     }
+    
+    private func setUpFavoriteDrink() {
+        selectedDrinkViewModel.favoriteDrink.drinkName = selectedDrinkViewModel.selectedDrink?.drinkName ?? "-"
+        selectedDrinkViewModel.favoriteDrink.image = selectedDrinkViewModel.selectedDrink?.image ?? "-"
+        selectedDrinkViewModel.favoriteDrink.category = selectedDrinkViewModel.selectedDrink?.category ?? "-"
+        selectedDrinkViewModel.favoriteDrink.glass = selectedDrinkViewModel.selectedDrink?.glass
+        selectedDrinkViewModel.favoriteDrink.instructions = selectedDrinkViewModel.selectedDrink?.instructions
+        selectedDrinkViewModel.favoriteDrink.isFavourite = true
+    }
+    
 }

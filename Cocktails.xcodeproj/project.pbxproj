@@ -34,6 +34,7 @@
 		B8ADCC712AF117350092F466 /* NonAlcoholicDrinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADCC702AF117350092F466 /* NonAlcoholicDrinksViewModel.swift */; };
 		B8B77ED02B36BC780001B791 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */; };
 		B8B77ED22B36BF680001B791 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ED12B36BF680001B791 /* ToastView.swift */; };
+		B8B77ED62B43D4030001B791 /* RealmPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ED52B43D4030001B791 /* RealmPersistence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		B8ADCC702AF117350092F466 /* NonAlcoholicDrinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAlcoholicDrinksViewModel.swift; sourceTree = "<group>"; };
 		B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		B8B77ED12B36BF680001B791 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		B8B77ED52B43D4030001B791 /* RealmPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPersistence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				B85E75F42B3410E300FAADB2 /* Models */,
+				B8B77ED52B43D4030001B791 /* RealmPersistence.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				B83D81032AF4AA3400366D0D /* ItemListView.swift in Sources */,
 				B8ADC1812AD29AAB005905C7 /* Models.swift in Sources */,
 				B8ADC18A2AD29D30005905C7 /* Drink.swift in Sources */,
+				B8B77ED62B43D4030001B791 /* RealmPersistence.swift in Sources */,
 				B85E75FA2B34166200FAADB2 /* FavoritesView.swift in Sources */,
 				B8ADC1862AD29B1A005905C7 /* DrinkCategories.swift in Sources */,
 				B836691B2B05DE9F00F9799B /* SelectedDrinkViewModel.swift in Sources */,

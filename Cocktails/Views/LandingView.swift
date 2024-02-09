@@ -3,9 +3,7 @@ import SideBarComponent
 
 struct LandingView: View {
     
-    @State var navPath = NavigationPath()
-    var categories: [DrinkCategories] = [.alcoholic, .nonAlcoholic]
-    
+    @State var navPath = NavigationPath()    
     
     var body: some View {
         NavigationStack(path: $navPath) {

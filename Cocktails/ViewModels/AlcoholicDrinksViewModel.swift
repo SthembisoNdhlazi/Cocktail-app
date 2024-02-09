@@ -6,7 +6,7 @@ class AlcoholicDrinksViewModel: ItemListViewable {
     
 
     private var networking = CocktailsServiceCalls()
-    @Published var items: [ItemListViewModel] = []
+    @Published var items: [Drink] = []
     
     init() {
         setUpData()
@@ -15,7 +15,7 @@ class AlcoholicDrinksViewModel: ItemListViewable {
     func setUpData() {
         networking.getAlcoholicDrinks { drinks in
             for drink in drinks.drinks {
-                self.items.append(ItemListViewModel(imageURLString: drink.strDrinkThumb, title: drink.strDrink, subtitle: "Alcoholic"))
+                self.items.append(Drink(id: drink.idDrink ,drinkName: drink.strDrink, image: drink.strDrinkThumb,category: "Alcoholic"))
             }
             self.isLoading = false
         }

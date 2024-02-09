@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ItemListViewable: ObservableObject {
-    var items: [ItemListViewModel] {get set}
+    var items: [Drink] {get set}
     var isLoading: Bool {get set}
     func setUpData()
 }
