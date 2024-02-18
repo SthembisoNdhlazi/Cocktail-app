@@ -14,7 +14,7 @@ struct ItemListView<Provider: ItemListViewable>: View {
                     VStack {
                         ForEach(($dataProvider.items), id: \.id) { item in
                             NavigationLink {
-                                //This is why we can't make this its own module
+                                //MARK: make this selectedItemView and move them together
                                 SingleDrinkView(selectedDrink: item.wrappedValue)
                             } label: {
                                 HStack {
@@ -67,7 +67,8 @@ struct ItemListView<Provider: ItemListViewable>: View {
 
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
-        let dataProvider = AlcoholicDrinksViewModel()
+        let networking = CocktailsServiceCalls()
+        let dataProvider = AlcoholicDrinksViewModel(networking: networking)
         ItemListView(dataProvider: dataProvider)
     }
 }

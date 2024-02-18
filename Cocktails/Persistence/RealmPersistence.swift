@@ -62,12 +62,6 @@ import RealmSwift
 //}
 
 
-//  RealmManager.swift
-//  RealmManager
-//
-//  Created by Jonathan Bailey on 12/15/18.
-//  Copyright © 2018 Jonathan Bailey. All rights reserved.
-//
 import Foundation
 import RealmSwift
 
@@ -76,11 +70,13 @@ public class RealmManager {
     
     /// The shared instance of the realm manager.
     static let sharedInstance = RealmManager()
-    
+    @Published var favouriteDrinks: [FavoriteDrink] = []
+
     /// Private initializer for the realm manager. Crashes if it cannot open the database.
     private init() {
         do {
             database = try Realm()
+            favouriteDrinks = Array(fetch(object: FavoriteDrink()))
         }
         catch {
             fatalError(error.localizedDescription)
@@ -103,6 +99,7 @@ public class RealmManager {
         do {
             try database.write {
                 database.add(object)
+                favouriteDrinks = Array(fetch(object: FavoriteDrink()))
             }
         }
         catch {
@@ -136,6 +133,7 @@ public class RealmManager {
             try database.write {
                 if let foundObjectIndex = database.objects(FavoriteDrink.self).firstIndex(where: {$0.drinkName == object.drinkName}) {
                     database.delete(database.objects(FavoriteDrink.self)[foundObjectIndex])
+                    favouriteDrinks = Array(fetch(object: FavoriteDrink()))
                 }
             }
         }

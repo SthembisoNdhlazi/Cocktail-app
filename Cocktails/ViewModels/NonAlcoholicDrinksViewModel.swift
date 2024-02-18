@@ -9,19 +9,33 @@ import Foundation
 import SwiftUI
 
 class NonAlcoholicDrinksViewModel: ItemListViewable {
+    @Published var items: [Drink] = []
     var isLoading: Bool = true
     
-    var networking = CocktailsServiceCalls()
-    @Published var items: [Drink] = []
+    var networking: CocktailsNetworking?
     
-    init() {
+    init(networking: CocktailsNetworking) {
+        self.networking = networking
         setUpData()
     }
     
     func setUpData() {
-        networking.getNonAlcoholicDrinks { drinks in
-            for drink in drinks.drinks {
-                self.items.append(Drink(id: drink.idDrink ,drinkName: drink.strDrink, image: drink.strDrinkThumb,category: "Non alcoholic"))
+        networking?.fetchJSON(drinkType: .nonAlcoholic) { (result: Result<NonAlcoholicDrink, NetworkError>) in
+            switch result {
+            case .success(let alcoholicDrinks):
+                self.items = alcoholicDrinks.drinks.map({ drink in
+                    Drink(id: drink.idDrink,
+                          drinkName: drink.strDrink,
+                          glass: nil,
+                          instructions: nil,
+                          image: drink.strDrinkThumb,
+                          category: "Non Alcoholic",
+                          isFavorite: false)
+                })
+                self.isLoading = false
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.isLoading = false
             }
         }
         isLoading = false

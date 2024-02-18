@@ -2,13 +2,13 @@ import SwiftUI
 import RealmSwift
 
 struct SingleDrinkView: View {
-    //@Inject
+    //MARK: Make this more generic: SelectedItemViewModel instead of singleDrinkViewModel
     @StateObject var selectedDrinkViewModel: SelectedDrinkViewModel
     var realm = RealmManager.sharedInstance
 //    @Environment(\.dismiss) var dismiss
     
-    init (selectedDrink: Drink) {
-        self._selectedDrinkViewModel = StateObject(wrappedValue: SelectedDrinkViewModel(selectedDrink: selectedDrink))
+    init (selectedDrink: Drink, networking: CocktailsNetworking? = nil) {
+        self._selectedDrinkViewModel = StateObject(wrappedValue: SelectedDrinkViewModel(selectedDrink: selectedDrink, networking: networking ?? CocktailsServiceCalls()))
     }
     
     var body: some View {
@@ -88,6 +88,8 @@ extension SingleDrinkView {
                     setUpFavoriteDrink()
                     selectedDrinkViewModel.selectedDrink?.isFavorite = false
                     realm.delete(object: selectedDrinkViewModel.favoriteDrink)
+                } else {
+                    saveToRealm()
                 }
             } else {
                 saveToRealm()
@@ -122,12 +124,14 @@ extension SingleDrinkView {
     }
     
     private func setUpFavoriteDrink() {
-        selectedDrinkViewModel.favoriteDrink.drinkName = selectedDrinkViewModel.selectedDrink?.drinkName ?? "-"
-        selectedDrinkViewModel.favoriteDrink.image = selectedDrinkViewModel.selectedDrink?.image ?? "-"
-        selectedDrinkViewModel.favoriteDrink.category = selectedDrinkViewModel.selectedDrink?.category ?? "-"
-        selectedDrinkViewModel.favoriteDrink.glass = selectedDrinkViewModel.selectedDrink?.glass
-        selectedDrinkViewModel.favoriteDrink.instructions = selectedDrinkViewModel.selectedDrink?.instructions
-        selectedDrinkViewModel.favoriteDrink.isFavourite = true
+        let selectedDrink = selectedDrinkViewModel.selectedDrink
+        selectedDrinkViewModel.favoriteDrink = FavoriteDrink(id: selectedDrink?.id ?? UUID().uuidString,
+                                                             drinkName: selectedDrink?.drinkName ?? "",
+                                                             glass: selectedDrink?.glass,
+                                                             instructions: selectedDrink?.instructions,
+                                                             image: selectedDrink?.image ?? "",
+                                                             category: selectedDrink?.category,
+                                                             isFavourite: true)
     }
     
 }

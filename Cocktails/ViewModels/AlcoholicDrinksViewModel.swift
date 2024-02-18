@@ -2,23 +2,35 @@ import Foundation
 import SwiftUI
 
 class AlcoholicDrinksViewModel: ItemListViewable {
-    var isLoading: Bool = true
+    var networking: CocktailsNetworking?
     
-
-    private var networking = CocktailsServiceCalls()
+    var isLoading: Bool = true
     @Published var items: [Drink] = []
     
-    init() {
+    //MARK: Dependency injection... Abstracts not concretes
+    init(networking: CocktailsNetworking) {
+        self.networking = networking
         setUpData()
     }
     
     func setUpData() {
-        networking.getAlcoholicDrinks { drinks in
-            for drink in drinks.drinks {
-                self.items.append(Drink(id: drink.idDrink ,drinkName: drink.strDrink, image: drink.strDrinkThumb,category: "Alcoholic"))
+        networking?.fetchJSON(drinkType: .alcoholic) { (result: Result<AlcoholicDrinks, NetworkError>) in
+            switch result {
+            case .success(let alcoholicDrinks):
+                self.items = alcoholicDrinks.drinks.map({ drink in
+                    Drink(id: drink.idDrink,
+                          drinkName: drink.strDrink,
+                          glass: nil,
+                          instructions: nil,
+                          image: drink.strDrinkThumb,
+                          category: "Alcoholic",
+                          isFavorite: false)
+                })
+                self.isLoading = false
+            case .failure(let error):
+                print(error.localizedDescription)
+                self.isLoading = false
             }
-            self.isLoading = false
         }
-        
     }
 }
