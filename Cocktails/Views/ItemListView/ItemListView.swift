@@ -15,7 +15,7 @@ struct ItemListView<Provider: ItemListViewable>: View {
                         ForEach(($dataProvider.items), id: \.id) { item in
                             NavigationLink {
                                 //MARK: make this selectedItemView and move them together
-                                SingleDrinkView(selectedDrink: item.wrappedValue)
+                                SingleItemView(selectedItem: item.wrappedValue)
                             } label: {
                                 HStack {
                                     if let imageURL = URL(string: item.image.wrappedValue) {

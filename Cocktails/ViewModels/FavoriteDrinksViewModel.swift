@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 
 class FavoriteDrinksViewModel: ItemListViewable {
-    @Published var items: [Drink] = []
+    @Published var items: [Item] = []
     var networking: CocktailsNetworking? = nil
     
     var isLoading: Bool = true
@@ -15,7 +15,7 @@ class FavoriteDrinksViewModel: ItemListViewable {
     
     func setUpData() {
 //        self.items = self.realm.favouriteDrinks
-        self.items = self.$favouriteDrinks.wrappedValue.map({ Drink(id: $0.id,
+        self.items = self.$favouriteDrinks.wrappedValue.map({ Item(id: $0.id,
                                                      drinkName: $0.drinkName,
                                                      glass: $0.glass,
                                                      instructions: $0.instructions,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Drink: Drinkable, Identifiable {
+struct Item: ItemViewable, Identifiable {
     var id: String = UUID().uuidString
     
     var drinkName: String

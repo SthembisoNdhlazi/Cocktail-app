@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class NonAlcoholicDrinksViewModel: ItemListViewable {
-    @Published var items: [Drink] = []
+    @Published var items: [Item] = []
     var isLoading: Bool = true
     
     var networking: CocktailsNetworking?
@@ -24,7 +24,7 @@ class NonAlcoholicDrinksViewModel: ItemListViewable {
             switch result {
             case .success(let alcoholicDrinks):
                 self.items = alcoholicDrinks.drinks.map({ drink in
-                    Drink(id: drink.idDrink,
+                    Item(id: drink.idDrink,
                           drinkName: drink.strDrink,
                           glass: nil,
                           instructions: nil,

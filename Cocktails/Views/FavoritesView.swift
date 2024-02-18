@@ -20,7 +20,7 @@ struct FavoritesView: View {
     var body: some View {
         ItemListView(dataProvider: favoriteDrinksVM)
             .onAppear {
-                favoriteDrinksVM.items = realm.favouriteDrinks.map({Drink(id: $0.id,
+                favoriteDrinksVM.items = realm.favouriteDrinks.map({Item(id: $0.id,
                                                                           drinkName: $0.drinkName,
                                                                           glass: $0.glass,
                                                                           instructions: $0.instructions,

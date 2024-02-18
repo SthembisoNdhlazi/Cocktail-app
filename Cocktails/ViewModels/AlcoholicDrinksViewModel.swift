@@ -5,7 +5,7 @@ class AlcoholicDrinksViewModel: ItemListViewable {
     var networking: CocktailsNetworking?
     
     var isLoading: Bool = true
-    @Published var items: [Drink] = []
+    @Published var items: [Item] = []
     
     //MARK: Dependency injection... Abstracts not concretes
     init(networking: CocktailsNetworking) {
@@ -18,7 +18,7 @@ class AlcoholicDrinksViewModel: ItemListViewable {
             switch result {
             case .success(let alcoholicDrinks):
                 self.items = alcoholicDrinks.drinks.map({ drink in
-                    Drink(id: drink.idDrink,
+                    Item( id: drink.idDrink,
                           drinkName: drink.strDrink,
                           glass: nil,
                           instructions: nil,

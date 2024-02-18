@@ -1,22 +1,22 @@
 import Foundation
 import RealmSwift
 
-class SelectedDrinkViewModel: ObservableObject {
+class SelectedItemViewModel: ObservableObject {
     var networking: CocktailsNetworking
-    @Published var selectedDrink: Drink?
+    @Published var selectedItem: Item?
     @Published var isLoading: Bool = false
     @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
     
-    init(selectedDrink: Drink? = nil, networking: CocktailsNetworking) {
+    init(selectedItem: Item? = nil, networking: CocktailsNetworking) {
         self.networking = networking
-        self.selectedDrink = selectedDrink
-        if let selectedDrink = self.selectedDrink {
-            self.setUpDrink(with: selectedDrink)
+        self.selectedItem = selectedItem
+        if let selectedItem = self.selectedItem {
+            self.setUpDrink(with: selectedItem)
         }
     }
     
     
-    func setUpDrink(with selectedDrink: Drink) {
+    func setUpDrink(with selectedDrink: Item) {
         self.isLoading = true
         if !(selectedDrink.isFavorite ?? false) {
             fetchDrinkDetails(selectedDrink)
@@ -26,20 +26,18 @@ class SelectedDrinkViewModel: ObservableObject {
         }
     }
     
-    private func fetchDrinkDetails(_ selectedDrink: Drink) {
+    private func fetchDrinkDetails(_ selectedDrink: Item) {
         networking.fetchJSON(drinkType: .detailedDrink, specificDrinkID: selectedDrink.id) { (result: Result<SearchedDrinkDetails, NetworkError>) in
             switch result {
             case .success(let searchedDrink):
                 if let searchedDrink = searchedDrink.drinks.first {
-                    DispatchQueue.main.async {
-                        self.selectedDrink = Drink(id: searchedDrink.idDrink,
-                                                   drinkName: searchedDrink.strDrink,
-                                                   glass: searchedDrink.strGlass,
-                                                   instructions: searchedDrink.strInstructions,
-                                                   image: searchedDrink.strDrinkThumb,
-                                                   category: searchedDrink.strCategory,
-                                                   isFavorite: false)
-                    }
+                    self.selectedItem = Item(id: searchedDrink.idDrink,
+                                             drinkName: searchedDrink.strDrink,
+                                             glass: searchedDrink.strGlass,
+                                             instructions: searchedDrink.strInstructions,
+                                             image: searchedDrink.strDrinkThumb,
+                                             category: searchedDrink.strCategory,
+                                             isFavorite: false)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -47,7 +45,7 @@ class SelectedDrinkViewModel: ObservableObject {
         }
     }
     
-    private func setupDrinkFromRealm(_ selectedDrink: Drink) {
+    private func setupDrinkFromRealm(_ selectedDrink: Item) {
         self.favoriteDrink.drinkName = selectedDrink.drinkName
         self.favoriteDrink.isFavourite = true
         self.favoriteDrink.image = selectedDrink.image

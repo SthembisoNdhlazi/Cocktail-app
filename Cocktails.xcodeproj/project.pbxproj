@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B83669152B053F6700F9799B /* ItemListViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83669142B053F6700F9799B /* ItemListViewable.swift */; };
-		B836691B2B05DE9F00F9799B /* SelectedDrinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B836691A2B05DE9F00F9799B /* SelectedDrinkViewModel.swift */; };
+		B836691B2B05DE9F00F9799B /* SelectedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B836691A2B05DE9F00F9799B /* SelectedItemViewModel.swift */; };
 		B83D81032AF4AA3400366D0D /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83D81022AF4AA3400366D0D /* ItemListView.swift */; };
 		B84098642AF2D7F500034859 /* SideBarDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84098632AF2D7F500034859 /* SideBarDataProvider.swift */; };
 		B85E75F02B3410C600FAADB2 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B85E75EF2B3410C600FAADB2 /* Realm */; };
@@ -28,12 +28,13 @@
 		B8ADC17E2AD29A67005905C7 /* CocktailsServiceCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC17D2AD29A67005905C7 /* CocktailsServiceCalls.swift */; };
 		B8ADC1812AD29AAB005905C7 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1802AD29AAB005905C7 /* Models.swift */; };
 		B8ADC1862AD29B1A005905C7 /* DrinkCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1852AD29B1A005905C7 /* DrinkCategories.swift */; };
-		B8ADC1882AD29C00005905C7 /* SingleDrinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1872AD29BFF005905C7 /* SingleDrinkView.swift */; };
-		B8ADC18A2AD29D30005905C7 /* Drink.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1892AD29D30005905C7 /* Drink.swift */; };
+		B8ADC1882AD29C00005905C7 /* SingleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1872AD29BFF005905C7 /* SingleItemView.swift */; };
+		B8ADC18A2AD29D30005905C7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1892AD29D30005905C7 /* Item.swift */; };
 		B8ADCC712AF117350092F466 /* NonAlcoholicDrinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADCC702AF117350092F466 /* NonAlcoholicDrinksViewModel.swift */; };
 		B8B77ED02B36BC780001B791 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */; };
 		B8B77ED22B36BF680001B791 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ED12B36BF680001B791 /* ToastView.swift */; };
 		B8B77ED62B43D4030001B791 /* RealmPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ED52B43D4030001B791 /* RealmPersistence.swift */; };
+		B8DBD8862B81F04E00E32478 /* ItemViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DBD8852B81F04E00E32478 /* ItemViewable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +56,7 @@
 
 /* Begin PBXFileReference section */
 		B83669142B053F6700F9799B /* ItemListViewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewable.swift; sourceTree = "<group>"; };
-		B836691A2B05DE9F00F9799B /* SelectedDrinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedDrinkViewModel.swift; sourceTree = "<group>"; };
+		B836691A2B05DE9F00F9799B /* SelectedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedItemViewModel.swift; sourceTree = "<group>"; };
 		B83D81022AF4AA3400366D0D /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		B84098632AF2D7F500034859 /* SideBarDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarDataProvider.swift; sourceTree = "<group>"; };
 		B85E75F52B3410F200FAADB2 /* FavoriteDrink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDrink.swift; sourceTree = "<group>"; };
@@ -75,12 +76,13 @@
 		B8ADC17D2AD29A67005905C7 /* CocktailsServiceCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsServiceCalls.swift; sourceTree = "<group>"; };
 		B8ADC1802AD29AAB005905C7 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B8ADC1852AD29B1A005905C7 /* DrinkCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkCategories.swift; sourceTree = "<group>"; };
-		B8ADC1872AD29BFF005905C7 /* SingleDrinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleDrinkView.swift; sourceTree = "<group>"; };
-		B8ADC1892AD29D30005905C7 /* Drink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drink.swift; sourceTree = "<group>"; };
+		B8ADC1872AD29BFF005905C7 /* SingleItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemView.swift; sourceTree = "<group>"; };
+		B8ADC1892AD29D30005905C7 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B8ADCC702AF117350092F466 /* NonAlcoholicDrinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAlcoholicDrinksViewModel.swift; sourceTree = "<group>"; };
 		B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		B8B77ED12B36BF680001B791 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		B8B77ED52B43D4030001B791 /* RealmPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPersistence.swift; sourceTree = "<group>"; };
+		B8DBD8852B81F04E00E32478 /* ItemViewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,7 +230,7 @@
 			children = (
 				B8ADC1542AD29A32005905C7 /* LandingView.swift */,
 				B85E75F92B34166200FAADB2 /* FavoritesView.swift */,
-				B8ADC1872AD29BFF005905C7 /* SingleDrinkView.swift */,
+				B8ADC1872AD29BFF005905C7 /* SingleItemView.swift */,
 				B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */,
 				B8B77ED12B36BF680001B791 /* ToastView.swift */,
 				B83669132B053F4900F9799B /* ItemListView */,
@@ -240,7 +242,8 @@
 			isa = PBXGroup;
 			children = (
 				B8ADC1852AD29B1A005905C7 /* DrinkCategories.swift */,
-				B8ADC1892AD29D30005905C7 /* Drink.swift */,
+				B8ADC1892AD29D30005905C7 /* Item.swift */,
+				B8DBD8852B81F04E00E32478 /* ItemViewable.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -250,7 +253,7 @@
 			children = (
 				B8AA3F822ADEF83E003BA9E2 /* AlcoholicDrinksViewModel.swift */,
 				B8ADCC702AF117350092F466 /* NonAlcoholicDrinksViewModel.swift */,
-				B836691A2B05DE9F00F9799B /* SelectedDrinkViewModel.swift */,
+				B836691A2B05DE9F00F9799B /* SelectedItemViewModel.swift */,
 				B85E75F72B3412DC00FAADB2 /* FavoriteDrinksViewModel.swift */,
 			);
 			path = ViewModels;
@@ -400,7 +403,7 @@
 				B83669152B053F6700F9799B /* ItemListViewable.swift in Sources */,
 				B8ADC1532AD29A32005905C7 /* CocktailsApp.swift in Sources */,
 				B8ADC17E2AD29A67005905C7 /* CocktailsServiceCalls.swift in Sources */,
-				B8ADC1882AD29C00005905C7 /* SingleDrinkView.swift in Sources */,
+				B8ADC1882AD29C00005905C7 /* SingleItemView.swift in Sources */,
 				B84098642AF2D7F500034859 /* SideBarDataProvider.swift in Sources */,
 				B8AA3F832ADEF83E003BA9E2 /* AlcoholicDrinksViewModel.swift in Sources */,
 				B8B77ED22B36BF680001B791 /* ToastView.swift in Sources */,
@@ -408,11 +411,12 @@
 				B85E75F62B3410F200FAADB2 /* FavoriteDrink.swift in Sources */,
 				B83D81032AF4AA3400366D0D /* ItemListView.swift in Sources */,
 				B8ADC1812AD29AAB005905C7 /* Models.swift in Sources */,
-				B8ADC18A2AD29D30005905C7 /* Drink.swift in Sources */,
+				B8ADC18A2AD29D30005905C7 /* Item.swift in Sources */,
 				B8B77ED62B43D4030001B791 /* RealmPersistence.swift in Sources */,
+				B8DBD8862B81F04E00E32478 /* ItemViewable.swift in Sources */,
 				B85E75FA2B34166200FAADB2 /* FavoritesView.swift in Sources */,
 				B8ADC1862AD29B1A005905C7 /* DrinkCategories.swift in Sources */,
-				B836691B2B05DE9F00F9799B /* SelectedDrinkViewModel.swift in Sources */,
+				B836691B2B05DE9F00F9799B /* SelectedItemViewModel.swift in Sources */,
 				B85E75F82B3412DC00FAADB2 /* FavoriteDrinksViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

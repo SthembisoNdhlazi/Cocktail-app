@@ -7,10 +7,3 @@ enum DrinkCategories: String {
     case search = "Search"
 }
 
-protocol Drinkable: Hashable {
-    var drinkName:String { get }
-    var glass: String? { get }
-    var instructions: String? { get }
-    var image: String { get }
-    var category:String? { get }
-}

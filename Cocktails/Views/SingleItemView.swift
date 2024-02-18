@@ -1,18 +1,18 @@
 import SwiftUI
 import RealmSwift
 
-struct SingleDrinkView: View {
+struct SingleItemView: View {
     //MARK: Make this more generic: SelectedItemViewModel instead of singleDrinkViewModel
-    @StateObject var selectedDrinkViewModel: SelectedDrinkViewModel
+    @StateObject var selectedItemViewModel: SelectedItemViewModel
     var realm = RealmManager.sharedInstance
 //    @Environment(\.dismiss) var dismiss
     
-    init (selectedDrink: Drink, networking: CocktailsNetworking? = nil) {
-        self._selectedDrinkViewModel = StateObject(wrappedValue: SelectedDrinkViewModel(selectedDrink: selectedDrink, networking: networking ?? CocktailsServiceCalls()))
+    init (selectedItem: Item, networking: CocktailsNetworking? = nil) {
+        self._selectedItemViewModel = StateObject(wrappedValue: SelectedItemViewModel(selectedItem: selectedItem, networking: networking ?? CocktailsServiceCalls()))
     }
     
     var body: some View {
-        if let selectedDrink = selectedDrinkViewModel.selectedDrink {
+        if let selectedDrink = selectedItemViewModel.selectedItem {
             ScrollView {
                 VStack {
                     if let imageURL = URL(string: selectedDrink.image) {
@@ -71,7 +71,7 @@ struct SingleDrinkView: View {
     }
 }
 
-extension SingleDrinkView {
+extension SingleItemView {
     @ViewBuilder
     func categoryAndDetailRow(category: String, description: String) -> some View {
         Text(category)
@@ -86,8 +86,8 @@ extension SingleDrinkView {
                 if isFavorite {
                     //remove from realm
                     setUpFavoriteDrink()
-                    selectedDrinkViewModel.selectedDrink?.isFavorite = false
-                    realm.delete(object: selectedDrinkViewModel.favoriteDrink)
+                    selectedItemViewModel.selectedItem?.isFavorite = false
+                    realm.delete(object: selectedItemViewModel.favoriteDrink)
                 } else {
                     saveToRealm()
                 }
@@ -114,23 +114,23 @@ extension SingleDrinkView {
 }
 
 
-extension SingleDrinkView {
+extension SingleItemView {
     //MARK: Move logic to selectedDrinkViewModel
     private func saveToRealm() {
         setUpFavoriteDrink()
-        selectedDrinkViewModel.selectedDrink?.isFavorite = true
+        selectedItemViewModel.selectedItem?.isFavorite = true
 //        realm.save(drink: selectedDrinkViewModel.favoriteDrink)
-        realm.save(object: selectedDrinkViewModel.favoriteDrink)
+        realm.save(object: selectedItemViewModel.favoriteDrink)
     }
     
     private func setUpFavoriteDrink() {
-        let selectedDrink = selectedDrinkViewModel.selectedDrink
-        selectedDrinkViewModel.favoriteDrink = FavoriteDrink(id: selectedDrink?.id ?? UUID().uuidString,
-                                                             drinkName: selectedDrink?.drinkName ?? "",
-                                                             glass: selectedDrink?.glass,
-                                                             instructions: selectedDrink?.instructions,
-                                                             image: selectedDrink?.image ?? "",
-                                                             category: selectedDrink?.category,
+        let selectedItem = selectedItemViewModel.selectedItem
+        selectedItemViewModel.favoriteDrink = FavoriteDrink(id: selectedItem?.id ?? UUID().uuidString,
+                                                             drinkName: selectedItem?.drinkName ?? "",
+                                                             glass: selectedItem?.glass,
+                                                             instructions: selectedItem?.instructions,
+                                                             image: selectedItem?.image ?? "",
+                                                             category: selectedItem?.category,
                                                              isFavourite: true)
     }
     
