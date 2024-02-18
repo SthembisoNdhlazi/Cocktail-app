@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct ItemListView<Provider: ItemListViewable>: View {
     @StateObject var dataProvider: Provider
@@ -19,19 +20,19 @@ struct ItemListView<Provider: ItemListViewable>: View {
                             } label: {
                                 HStack {
                                     if let imageURL = URL(string: item.image.wrappedValue) {
-                                        AsyncImage(url: imageURL) { image in
-                                            image
-                                                .resizable()
-                                                .frame(width: 50, height: 50)
-                                                .cornerRadius(15)
-                                                .padding([.top, .horizontal])
-                                                .shadow(color: .gray, radius: 5, x: 5, y: 5)
-                                        } placeholder: {
-                                            ProgressView()
-                                                .frame(width: 50, height: 50)
-                                        }
+                                        KFImage(imageURL)
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+                                            .cornerRadius(15)
+                                            .padding([.top, .horizontal])
+                                            .shadow(color: .gray, radius: 5, x: 5, y: 5)
+                                    } else {
+                                        ProgressView()
+                                            .frame(width: 250, height: 250)
                                     }
+                                
                                     Spacer()
+                                    
                                     VStack(alignment: .center, spacing: 5) {
                                         Text(item.drinkName.wrappedValue)
                                             .font(.system(size: 16))

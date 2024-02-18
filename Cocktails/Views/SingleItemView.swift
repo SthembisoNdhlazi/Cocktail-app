@@ -1,5 +1,6 @@
 import SwiftUI
 import RealmSwift
+import Kingfisher
 
 struct SingleItemView: View {
     //MARK: Make this more generic: SelectedItemViewModel instead of singleDrinkViewModel
@@ -16,16 +17,14 @@ struct SingleItemView: View {
             ScrollView {
                 VStack {
                     if let imageURL = URL(string: selectedDrink.image) {
-                        AsyncImage(url: imageURL) { image in
-                            image
-                                .resizable()
-                                .frame(width: 250, height: 250)
-                                .cornerRadius(15)
-                                .padding(.top)
-                        } placeholder: {
-                            ProgressView()
-                                .frame(width: 250, height: 250)
-                        }
+                        KFImage(imageURL)
+                            .resizable()
+                            .frame(width: 250, height: 250)
+                            .cornerRadius(15)
+                            .padding(.top)
+                    } else {
+                        ProgressView()
+                            .frame(width: 250, height: 250)
                     }
                 }
                 .padding()
