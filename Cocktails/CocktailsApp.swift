@@ -26,7 +26,7 @@ struct CocktailsApp: App {
             SideBarDataProvider(networking: resolver.resolve(CocktailsNetworking.self)!)
         }
         
-        Container.shared.register(RealmManagable.self) { _ in
+        Container.shared.register(Persistable.self) { _ in
             RealmManager()
         }.inObjectScope(.container)
         
@@ -45,6 +45,28 @@ struct CocktailsApp: App {
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.favoriteDrinksViewModel) { resolver in
             FavoriteDrinksViewModel()
         }
+        
+        //MARK: Bind all the views, including the selectedItemView and ItemListView
+        Container.shared.register(DetailView.self, name: RegistrationName.singleDrinkView) { resolver, item in
+            SingleItemView(selectedItem: item)
+        }
+        
+        Container.shared.register(AnyView.self, name: RegistrationName.alcoholicDrinksView) { resolver in
+            let provider = resolver.resolve((any ItemListViewable).self, name: RegistrationName.alcoholicDrinksViewModel)
+            
+            return AnyView (ItemListView(dataProvider: provider as! AlcoholicDrinksViewModel) { item in
+                resolver.resolve(DetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
+            })
+        }
+        
+        Container.shared.register((AnyView.self), name: RegistrationName.nonAlcoholicView) { resolver in
+            let provider = resolver.resolve((any ItemListViewable).self, name: RegistrationName.nonAlcoholicDrinksViewModel)
+            
+            return AnyView (ItemListView(dataProvider: provider as! NonAlcoholicDrinksViewModel) { item in
+                resolver.resolve(DetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
+            })
+        }
+        
     }
 }
 
@@ -53,4 +75,7 @@ public enum RegistrationName {
     static let favoriteDrinksViewModel = "FavoriteDrinksViewModel"
     static let nonAlcoholicDrinksViewModel = "NonAlcoholicDrinksViewModel"
     static let alcoholicDrinksViewModel = "AlcoholicDrinksViewModel"
+    static let singleDrinkView = "SingleDrinkView"
+    static let nonAlcoholicView = "NonAlcoholicView"
+    static let alcoholicDrinksView = "AlcoholicDrinksView"
 }

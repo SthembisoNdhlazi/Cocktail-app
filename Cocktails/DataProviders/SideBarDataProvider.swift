@@ -14,13 +14,13 @@ class SideBarDataProvider: SideBarConfigurable {
             //                         view: AnyView(Text("Search goes here"))),
             
             SideBarViewModel(category: "Non alcoholic",
-                             view: AnyView(ItemListView(dataProvider: Container.shared.resolve((any ItemListViewable).self, name: RegistrationName.nonAlcoholicDrinksViewModel) as! NonAlcoholicDrinksViewModel))),
+                             view: Container.shared.resolve(AnyView.self, name: RegistrationName.nonAlcoholicView)!),
             
             SideBarViewModel(category: "My favorites",
                              view: AnyView(FavoritesView(favoriteDrinksVM: Container.shared.resolve((any ItemListViewable).self, name: RegistrationName.favoriteDrinksViewModel) as! FavoriteDrinksViewModel))),
             
             SideBarViewModel(category: "Alcoholic",
-                             view: AnyView(ItemListView(dataProvider: Container.shared.resolve((any ItemListViewable).self, name: RegistrationName.alcoholicDrinksViewModel) as! AlcoholicDrinksViewModel)))
+                             view: Container.shared.resolve(AnyView.self, name: RegistrationName.alcoholicDrinksView)!)
         ]
     }
 }

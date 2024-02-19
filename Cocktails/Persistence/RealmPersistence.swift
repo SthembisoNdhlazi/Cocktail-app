@@ -65,14 +65,14 @@ import RealmSwift
 import Foundation
 import RealmSwift
 
-protocol RealmManagable {
+protocol Persistable {
     var database: Realm { get }
     var favouriteDrinks: [FavoriteDrink] {get set}
     func save<T: Object>(object: T, _ errorHandler: @escaping ((_ error : Swift.Error) -> Void))
     func delete(object: FavoriteDrink, errorHandler: @escaping ((_ error : Swift.Error) -> Void))
 }
 
-public class RealmManager: RealmManagable {
+public class RealmManager: Persistable {
     internal let database: Realm
     
     /// The shared instance of the realm manager.

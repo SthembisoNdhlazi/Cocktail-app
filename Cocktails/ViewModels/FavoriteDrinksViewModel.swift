@@ -7,7 +7,7 @@ class FavoriteDrinksViewModel: ItemListViewable {
     var networking: CocktailsNetworking? = nil
     
     var isLoading: Bool = true
-    @Inject private var realm: RealmManagable
+    @Inject private var realm: Persistable
     
     init() {
         setUpData()

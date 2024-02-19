@@ -3,15 +3,15 @@ import RealmSwift
 import Kingfisher
 import InjectPropertyWrapper
 
-struct SingleItemView: View {
-    //MARK: Make this more generic: SelectedItemViewModel instead of singleDrinkViewModel
+struct SingleItemView: DetailView, View {
+    
     @StateObject var selectedItemViewModel: SelectedItemViewModel
-//    var realm = RealmManager()
-//    @Environment(\.dismiss) var dismiss
-    @Inject private var realm: RealmManagable
+    @Inject private var realm: Persistable
+    var selectedItem: Item
     
     init (selectedItem: Item, networking: CocktailsNetworking? = nil) {
         self._selectedItemViewModel = StateObject(wrappedValue: SelectedItemViewModel(selectedItem: selectedItem, networking: networking ?? CocktailsServiceCalls()))
+        self.selectedItem = selectedItem
     }
     
     var body: some View {
@@ -83,21 +83,7 @@ extension SingleItemView {
     
     func addToFavoriteButton(isFavorite: Bool?) -> some View {
         Button(action: {
-            if let isFavorite {
-                if isFavorite {
-                    //remove from realm
-                    setUpFavoriteDrink()
-                    selectedItemViewModel.selectedItem?.isFavorite = false
-                    realm.delete(object: selectedItemViewModel.favoriteDrink) { error in
-                        print(error)
-                    }
-                } else {
-                    saveToRealm()
-                }
-            } else {
-                saveToRealm()
-            }
-//            dismiss()
+            selectedItemViewModel.addOrDeleteFromDatabase(isFavorite: isFavorite)
         }) {
             
             Text(isFavorite ?? false ? "Remove from favorites" : "Add to favorites")
@@ -114,29 +100,4 @@ extension SingleItemView {
         .cornerRadius(25)
         .padding()
     }
-}
-
-
-extension SingleItemView {
-    //MARK: Move logic to selectedDrinkViewModel
-    private func saveToRealm() {
-        setUpFavoriteDrink()
-        selectedItemViewModel.selectedItem?.isFavorite = true
-//        realm.save(drink: selectedDrinkViewModel.favoriteDrink)
-        realm.save(object: selectedItemViewModel.favoriteDrink) { error in
-            print(error)
-        }
-    }
-    
-    private func setUpFavoriteDrink() {
-        let selectedItem = selectedItemViewModel.selectedItem
-        selectedItemViewModel.favoriteDrink = FavoriteDrink(id: selectedItem?.id ?? UUID().uuidString,
-                                                             drinkName: selectedItem?.drinkName ?? "",
-                                                             glass: selectedItem?.glass,
-                                                             instructions: selectedItem?.instructions,
-                                                             image: selectedItem?.image ?? "",
-                                                             category: selectedItem?.category,
-                                                             isFavourite: true)
-    }
-    
 }

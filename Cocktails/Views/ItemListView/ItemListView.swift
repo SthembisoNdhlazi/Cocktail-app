@@ -1,11 +1,17 @@
 import SwiftUI
 import Kingfisher
 
-struct ItemListView<Provider: ItemListViewable>: View {
+protocol DetailView {
+    var selectedItem: Item { get }
+}
+
+struct ItemListView<Provider: ItemListViewable, DetailView: View>: View {
     @StateObject var dataProvider: Provider
+    let detailView: (Item) -> DetailView
     
-    init(dataProvider: Provider) {
+    init(dataProvider: Provider,  @ViewBuilder detailView: @escaping (Item) -> DetailView) {
         self._dataProvider = StateObject(wrappedValue: dataProvider)
+        self.detailView = detailView
     }
     
     var body: some View {
@@ -15,8 +21,7 @@ struct ItemListView<Provider: ItemListViewable>: View {
                     VStack {
                         ForEach(($dataProvider.items), id: \.id) { item in
                             NavigationLink {
-                                //MARK: make this selectedItemView and move them together
-                                SingleItemView(selectedItem: item.wrappedValue)
+                                detailView(item.wrappedValue)
                             } label: {
                                 HStack {
                                     if let imageURL = URL(string: item.image.wrappedValue) {
@@ -66,10 +71,3 @@ struct ItemListView<Provider: ItemListViewable>: View {
     }
 }
 
-struct GridView_Previews: PreviewProvider {
-    static var previews: some View {
-        let networking = CocktailsServiceCalls()
-        let dataProvider = AlcoholicDrinksViewModel(networking: networking)
-        ItemListView(dataProvider: dataProvider)
-    }
-}
