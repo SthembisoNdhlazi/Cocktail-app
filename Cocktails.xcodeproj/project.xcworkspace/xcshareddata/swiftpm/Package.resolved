@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "injectpropertywrapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/egeniq/InjectPropertyWrapper",
+      "state" : {
+        "revision" : "59b7beb5d3f67e58d034639c2da33d9802d27770",
+        "version" : "0.3.0"
+      }
+    },
+    {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
@@ -34,6 +43,15 @@
       "state" : {
         "revision" : "c20c848cc0356f8e95d78d9f5e3636a25d4fe22c",
         "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "swinject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Swinject/Swinject",
+      "state" : {
+        "revision" : "463cb2d659c8ae34899d18057ea5b1bb86fc3178",
+        "version" : "2.8.4"
       }
     }
   ],

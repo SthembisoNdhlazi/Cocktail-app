@@ -1,12 +1,14 @@
 import SwiftUI
 import RealmSwift
 import Kingfisher
+import InjectPropertyWrapper
 
 struct SingleItemView: View {
     //MARK: Make this more generic: SelectedItemViewModel instead of singleDrinkViewModel
     @StateObject var selectedItemViewModel: SelectedItemViewModel
-    var realm = RealmManager.sharedInstance
+//    var realm = RealmManager()
 //    @Environment(\.dismiss) var dismiss
+    @Inject private var realm: RealmManagable
     
     init (selectedItem: Item, networking: CocktailsNetworking? = nil) {
         self._selectedItemViewModel = StateObject(wrappedValue: SelectedItemViewModel(selectedItem: selectedItem, networking: networking ?? CocktailsServiceCalls()))
@@ -86,7 +88,9 @@ extension SingleItemView {
                     //remove from realm
                     setUpFavoriteDrink()
                     selectedItemViewModel.selectedItem?.isFavorite = false
-                    realm.delete(object: selectedItemViewModel.favoriteDrink)
+                    realm.delete(object: selectedItemViewModel.favoriteDrink) { error in
+                        print(error)
+                    }
                 } else {
                     saveToRealm()
                 }
@@ -119,7 +123,9 @@ extension SingleItemView {
         setUpFavoriteDrink()
         selectedItemViewModel.selectedItem?.isFavorite = true
 //        realm.save(drink: selectedDrinkViewModel.favoriteDrink)
-        realm.save(object: selectedItemViewModel.favoriteDrink)
+        realm.save(object: selectedItemViewModel.favoriteDrink) { error in
+            print(error)
+        }
     }
     
     private func setUpFavoriteDrink() {

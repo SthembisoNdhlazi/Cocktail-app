@@ -65,15 +65,22 @@ import RealmSwift
 import Foundation
 import RealmSwift
 
-public class RealmManager {
-    private let database: Realm
+protocol RealmManagable {
+    var database: Realm { get }
+    var favouriteDrinks: [FavoriteDrink] {get set}
+    func save<T: Object>(object: T, _ errorHandler: @escaping ((_ error : Swift.Error) -> Void))
+    func delete(object: FavoriteDrink, errorHandler: @escaping ((_ error : Swift.Error) -> Void))
+}
+
+public class RealmManager: RealmManagable {
+    internal let database: Realm
     
     /// The shared instance of the realm manager.
-    static let sharedInstance = RealmManager()
+//    static let sharedInstance = RealmManager()
     @Published var favouriteDrinks: [FavoriteDrink] = []
 
     /// Private initializer for the realm manager. Crashes if it cannot open the database.
-    private init() {
+     init() {
         do {
             database = try Realm()
             favouriteDrinks = Array(fetch(object: FavoriteDrink()))

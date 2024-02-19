@@ -1,7 +1,13 @@
 import Foundation
 import RealmSwift
 
-class SelectedItemViewModel: ObservableObject {
+protocol SelectedItem: ObservableObject {
+    var networking: CocktailsNetworking {get set}
+    var selectedItem: Item? { get set }
+    var favoriteDrink: FavoriteDrink { get set}
+}
+
+class SelectedItemViewModel: SelectedItem {
     var networking: CocktailsNetworking
     @Published var selectedItem: Item?
     @Published var isLoading: Bool = false

@@ -17,15 +17,17 @@ class AlcoholicDrinksViewModel: ItemListViewable {
         networking?.fetchJSON(drinkType: .alcoholic) { (result: Result<AlcoholicDrinks, NetworkError>) in
             switch result {
             case .success(let alcoholicDrinks):
-                self.items = alcoholicDrinks.drinks.map({ drink in
-                    Item( id: drink.idDrink,
-                          drinkName: drink.strDrink,
-                          glass: nil,
-                          instructions: nil,
-                          image: drink.strDrinkThumb,
-                          category: "Alcoholic",
-                          isFavorite: false)
-                })
+                DispatchQueue.main.async {
+                    self.items = alcoholicDrinks.drinks.map({ drink in
+                        Item( id: drink.idDrink,
+                              drinkName: drink.strDrink,
+                              glass: nil,
+                              instructions: nil,
+                              image: drink.strDrinkThumb,
+                              category: "Alcoholic",
+                              isFavorite: false)
+                    })
+                }
                 self.isLoading = false
             case .failure(let error):
                 print(error.localizedDescription)

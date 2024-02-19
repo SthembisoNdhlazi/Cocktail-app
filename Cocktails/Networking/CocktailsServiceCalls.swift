@@ -62,6 +62,7 @@ extension CocktailsNetworking {
         }.resume()
     }
 }
+
 struct CocktailsServiceCalls: CocktailsNetworking {
     var baseURL: String = "https://www.thecocktaildb.com/api/json/v1/1/"
 }

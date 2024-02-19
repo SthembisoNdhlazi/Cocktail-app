@@ -1,13 +1,13 @@
 import Foundation
 import RealmSwift
+import InjectPropertyWrapper
 
 class FavoriteDrinksViewModel: ItemListViewable {
     @Published var items: [Item] = []
     var networking: CocktailsNetworking? = nil
     
     var isLoading: Bool = true
-    var realm = RealmManager.sharedInstance
-    @ObservedResults(FavoriteDrink.self) var favouriteDrinks
+    @Inject private var realm: RealmManagable
     
     init() {
         setUpData()
@@ -15,13 +15,15 @@ class FavoriteDrinksViewModel: ItemListViewable {
     
     func setUpData() {
 //        self.items = self.realm.favouriteDrinks
-        self.items = self.$favouriteDrinks.wrappedValue.map({ Item(id: $0.id,
-                                                     drinkName: $0.drinkName,
-                                                     glass: $0.glass,
-                                                     instructions: $0.instructions,
-                                                     image: $0.image,
-                                                     category: $0.category,
-                                                     isFavorite: $0.isFavourite) })
+        DispatchQueue.main.async {
+            self.items = self.realm.favouriteDrinks.map({ Item(id: $0.id,
+                                                               drinkName: $0.drinkName,
+                                                               glass: $0.glass,
+                                                               instructions: $0.instructions,
+                                                               image: $0.image,
+                                                               category: $0.category,
+                                                               isFavorite: $0.isFavourite) })
+        }
         self.isLoading = false
     }
 }

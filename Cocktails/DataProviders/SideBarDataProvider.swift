@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import SideBarComponent
+import Swinject
 
 class SideBarDataProvider: SideBarConfigurable {
     let networking: CocktailsNetworking
@@ -13,13 +14,13 @@ class SideBarDataProvider: SideBarConfigurable {
             //                         view: AnyView(Text("Search goes here"))),
             
             SideBarViewModel(category: "Non alcoholic",
-                             view: AnyView(ItemListView(dataProvider: NonAlcoholicDrinksViewModel(networking: networking)))),
+                             view: AnyView(ItemListView(dataProvider: Container.shared.resolve((any ItemListViewable).self, name: RegistrationName.nonAlcoholicDrinksViewModel) as! NonAlcoholicDrinksViewModel))),
             
             SideBarViewModel(category: "My favorites",
-                             view: AnyView(FavoritesView())),
+                             view: AnyView(FavoritesView(favoriteDrinksVM: Container.shared.resolve((any ItemListViewable).self, name: RegistrationName.favoriteDrinksViewModel) as! FavoriteDrinksViewModel))),
             
             SideBarViewModel(category: "Alcoholic",
-                             view: AnyView(ItemListView(dataProvider: AlcoholicDrinksViewModel(networking: networking))))
+                             view: AnyView(ItemListView(dataProvider: Container.shared.resolve((any ItemListViewable).self, name: RegistrationName.alcoholicDrinksViewModel) as! AlcoholicDrinksViewModel)))
         ]
     }
 }

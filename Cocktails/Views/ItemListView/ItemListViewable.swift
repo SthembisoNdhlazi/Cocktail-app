@@ -9,8 +9,8 @@ import Foundation
 
 protocol ItemListViewable: ObservableObject {
     var networking: CocktailsNetworking? { get set }
-    var items: [Item] {get set}
-    var isLoading: Bool {get set}
+    var items: [Item] { get set }
+    var isLoading: Bool { get set }
     func setUpData()
 }
 
