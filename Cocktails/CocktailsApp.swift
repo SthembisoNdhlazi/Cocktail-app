@@ -13,9 +13,7 @@ struct CocktailsApp: App {
     
     var body: some Scene {
         WindowGroup {
-            //TODO: Get rid of this and just use SideBarComponent instead of landing view
-            LandingView(view: AnyView(SidebarComponent(dataProvider: Container.shared.resolve((any SideBarConfigurable).self) as! SideBarDataProvider, title: "Cocktails")))
-            
+            SidebarComponent(dataProvider: Container.shared.resolve((any SideBarConfigurable).self) as! SideBarDataProvider, title: "Cocktails")
         }
     }
     
