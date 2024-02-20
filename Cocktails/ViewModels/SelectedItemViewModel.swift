@@ -1,6 +1,7 @@
 import Foundation
 import RealmSwift
 import InjectPropertyWrapper
+import ReusableComponents
 
 protocol SelectedItem: ObservableObject {
     var networking: CocktailsNetworking {get set}

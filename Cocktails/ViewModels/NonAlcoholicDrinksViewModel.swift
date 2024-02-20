@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftUI
+import ReusableComponents
 
 class NonAlcoholicDrinksViewModel: ItemListViewable {
-    @Published var items: [Item] = []
+    var items: [Item] = []
     var isLoading: Bool = true
     
     var networking: CocktailsNetworking?

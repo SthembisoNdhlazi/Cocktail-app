@@ -1,6 +1,7 @@
 import Foundation
 import RealmSwift
 import InjectPropertyWrapper
+import ReusableComponents
 
 class FavoriteDrinksViewModel: ItemListViewable {
     @Published var items: [Item] = []

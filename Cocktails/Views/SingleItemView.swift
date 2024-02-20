@@ -2,8 +2,9 @@ import SwiftUI
 import RealmSwift
 import Kingfisher
 import InjectPropertyWrapper
+import ReusableComponents
 
-struct SingleItemView: DetailView, View {
+struct SingleItemView: ItemDetailView, View {
     
     @StateObject var selectedItemViewModel: SelectedItemViewModel
     @Inject private var realm: Persistable

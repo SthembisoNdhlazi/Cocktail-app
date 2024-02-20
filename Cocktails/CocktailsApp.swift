@@ -1,7 +1,8 @@
 import SwiftUI
-import SideBarComponent
 import Swinject
 import InjectPropertyWrapper
+import ReusableComponents
+import SideBarComponent
 
 @main
 struct CocktailsApp: App {
@@ -31,11 +32,11 @@ struct CocktailsApp: App {
         }.inObjectScope(.container)
         
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.alcoholicDrinksViewModel) { resolver in
-            AlcoholicDrinksViewModel(networking: resolver.resolve(CocktailsNetworking.self)!)
+            AlcoholicDrinksViewModel(networking: resolver.resolve(CocktailsNetworking.self)!) as any ItemListViewable
         }
         
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.nonAlcoholicDrinksViewModel) { resolver in
-            NonAlcoholicDrinksViewModel(networking: resolver.resolve(CocktailsNetworking.self)!)
+            NonAlcoholicDrinksViewModel(networking: resolver.resolve(CocktailsNetworking.self)!) as any ItemListViewable
         }
         
         Container.shared.register((any SelectedItem).self, name: RegistrationName.selectedItemViewModel) { resolver in
@@ -43,11 +44,11 @@ struct CocktailsApp: App {
         }
         
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.favoriteDrinksViewModel) { resolver in
-            FavoriteDrinksViewModel()
+            FavoriteDrinksViewModel() as any ItemListViewable
         }
         
         //MARK: Bind all the views, including the selectedItemView and ItemListView
-        Container.shared.register(DetailView.self, name: RegistrationName.singleDrinkView) { resolver, item in
+        Container.shared.register(ItemDetailView.self, name: RegistrationName.singleDrinkView) { resolver, item in
             SingleItemView(selectedItem: item)
         }
         
@@ -55,7 +56,7 @@ struct CocktailsApp: App {
             let provider = resolver.resolve((any ItemListViewable).self, name: RegistrationName.alcoholicDrinksViewModel)
             
             return AnyView (ItemListView(dataProvider: provider as! AlcoholicDrinksViewModel) { item in
-                resolver.resolve(DetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
+                resolver.resolve(ItemDetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
             })
         }
         
@@ -63,7 +64,7 @@ struct CocktailsApp: App {
             let provider = resolver.resolve((any ItemListViewable).self, name: RegistrationName.nonAlcoholicDrinksViewModel)
             
             return AnyView (ItemListView(dataProvider: provider as! NonAlcoholicDrinksViewModel) { item in
-                resolver.resolve(DetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
+                resolver.resolve(ItemDetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
             })
         }
         
@@ -78,4 +79,5 @@ public enum RegistrationName {
     static let singleDrinkView = "SingleDrinkView"
     static let nonAlcoholicView = "NonAlcoholicView"
     static let alcoholicDrinksView = "AlcoholicDrinksView"
+    static let favoriteDrinksView = "FavoriteDrinksView"
 }

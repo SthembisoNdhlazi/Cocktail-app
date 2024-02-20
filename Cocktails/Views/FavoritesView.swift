@@ -8,6 +8,7 @@
 import SwiftUI
 import RealmSwift
 import InjectPropertyWrapper
+import ReusableComponents
 
 //MARK: Gotta fix this homie, we should use ItemListView directly
 //MARK: We did this because the data didn't reload when you saved to realm
