@@ -9,6 +9,4 @@ extension Container {
     }
 }
 
-extension Container: InjectPropertyWrapper.Resolver {
-    
-}
+extension Container: InjectPropertyWrapper.Resolver { }

@@ -75,11 +75,8 @@ protocol Persistable {
 public class RealmManager: Persistable {
     internal let database: Realm
     
-    /// The shared instance of the realm manager.
-//    static let sharedInstance = RealmManager()
     @Published var favouriteDrinks: [FavoriteDrink] = []
 
-    /// Private initializer for the realm manager. Crashes if it cannot open the database.
      init() {
         do {
             database = try Realm()
@@ -90,18 +87,10 @@ public class RealmManager: Persistable {
         }
     }
     
-    /// Retrieves the given object type from the database.
-    ///
-    /// - Parameter object: The type of object to retrieve.
-    /// - Returns: The results in the database for the given object type.
     public func fetch<T: Object>(object: T) -> Results<T> {
         return database.objects(T.self)
     }
     
-    /// Writes the given object to the database.
-    /// Custom error handling available as a closure parameter (default just returns).
-    ///
-    /// - Returns: Nothing
     public func save<T: Object>(object: T, _ errorHandler: @escaping ((_ error : Swift.Error) -> Void) = { _ in return }) {
         do {
             try database.write {
@@ -114,10 +103,6 @@ public class RealmManager: Persistable {
         }
     }
     
-    /// Overwrites the given object in the database if it exists. If not, it will write it as a new object.
-    /// Custom error handling available as a closure parameter (default just returns).
-    ///
-    /// - Returns: Nothing
     public func update<T: Object>(object: T, errorHandler: @escaping ((_ error : Swift.Error) -> Void) = { _ in return }) {
         do {
             try database.write {
@@ -130,11 +115,6 @@ public class RealmManager: Persistable {
         }
     }
     
-    /// Deletes the given object from the database if it exists.
-    /// Custom error handling available as a closure parameter (default just returns).
-    ///
-    /// - Returns: Nothing
-    /// This works but you have to change views...
      func delete(object: FavoriteDrink, errorHandler: @escaping ((_ error : Swift.Error) -> Void) = { _ in return }) {
         do {
             try database.write {
@@ -149,10 +129,6 @@ public class RealmManager: Persistable {
         }
     }
     
-    /// Deletes all existing data from the database. This includes all objects of all types.
-    /// Custom error handling available as a closure parameter (default just returns).
-    ///
-    /// - Returns: Nothing
     public func deleteAll(errorHandler: @escaping ((_ error : Swift.Error) -> Void) = { _ in return }) {
         do {
             try database.write {
@@ -164,10 +140,6 @@ public class RealmManager: Persistable {
         }
     }
     
-    /// Write method (supports save, update + delete) to be used in asynchronous situations. Write logic is passed in via the "action" closure parameter.
-    /// Custom error handling available as a closure parameter (default just returns).
-    ///
-    /// - Returns: Nothing
     public func asyncWrite<T: ThreadConfined>(object: T, errorHandler: @escaping ((_ error : Swift.Error) -> Void) = { _ in return }, action: @escaping ((Realm, T?) -> Void)) {
         let threadSafeRef = ThreadSafeReference(to: object)
         let config = self.database.configuration
