@@ -27,9 +27,9 @@ struct CocktailsApp: App {
             SideBarDataProvider(networking: resolver.resolve(CocktailsNetworking.self)!)
         }
         
-        Container.shared.register(Persistable.self) { _ in
+        Container.shared.register((any Persistable).self) { _ in
             RealmManager()
-        }.inObjectScope(.container)
+        }
         
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.alcoholicDrinksViewModel) { resolver in
             AlcoholicDrinksViewModel(networking: resolver.resolve(CocktailsNetworking.self)!) as any ItemListViewable
@@ -66,6 +66,13 @@ struct CocktailsApp: App {
             return AnyView (ItemListView(dataProvider: provider as! NonAlcoholicDrinksViewModel) { item in
                 resolver.resolve(ItemDetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
             })
+        }
+        
+        Container.shared.register((AnyView).self, name: RegistrationName.favoriteDrinksView) { resolver in
+            let provider = resolver.resolve((any ItemListViewable).self, name: RegistrationName.favoriteDrinksViewModel)
+            return AnyView(ItemListView(dataProvider: provider as! FavoriteDrinksViewModel, detailView: { item in
+                resolver.resolve(ItemDetailView.self, name: RegistrationName.singleDrinkView, argument: item) as! SingleItemView
+            }))
         }
         
     }

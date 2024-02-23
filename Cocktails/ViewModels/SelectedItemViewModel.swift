@@ -14,7 +14,7 @@ class SelectedItemViewModel: SelectedItem {
     @Published var selectedItem: Item?
     @Published var isLoading: Bool = false
     @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
-    @Inject var realm: Persistable
+    @Inject var realm: any Persistable
     
     init(selectedItem: Item? = nil, networking: CocktailsNetworking) {
         self.networking = networking

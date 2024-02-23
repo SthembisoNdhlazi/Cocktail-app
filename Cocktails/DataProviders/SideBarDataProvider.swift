@@ -18,7 +18,7 @@ class SideBarDataProvider: SideBarConfigurable {
                              view: Container.shared.resolve(AnyView.self, name: RegistrationName.nonAlcoholicView)!),
             
             SideBarViewModel(category: DrinkCategories.favourites.rawValue,
-                             view: AnyView(FavoritesView(favoriteDrinksVM: Container.shared.resolve((any ItemListViewable).self, name: RegistrationName.favoriteDrinksViewModel) as! FavoriteDrinksViewModel))),
+                             view: Container.shared.resolve(AnyView.self, name: RegistrationName.favoriteDrinksView)!),
             
             SideBarViewModel(category: DrinkCategories.alcoholic.rawValue,
                              view: Container.shared.resolve(AnyView.self, name: RegistrationName.alcoholicDrinksView)!)

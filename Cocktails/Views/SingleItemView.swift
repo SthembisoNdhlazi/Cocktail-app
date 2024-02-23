@@ -7,7 +7,7 @@ import ReusableComponents
 struct SingleItemView: ItemDetailView, View {
     
     @StateObject var selectedItemViewModel: SelectedItemViewModel
-    @Inject private var realm: Persistable
+    @Inject private var realm: any Persistable
     var selectedItem: Item
     
     init (selectedItem: Item, networking: CocktailsNetworking? = nil) {
