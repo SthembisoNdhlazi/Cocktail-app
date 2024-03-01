@@ -32,19 +32,23 @@ struct CocktailsApp: App {
         }
         
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.alcoholicDrinksViewModel) { resolver in
-            AlcoholicDrinksViewModel(networking: resolver.resolve(CocktailsNetworking.self)!) as any ItemListViewable
+            AlcoholicDrinksViewModel(drinksRepository: resolver.resolve(DrinksRepository.self)!) as any ItemListViewable
         }
         
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.nonAlcoholicDrinksViewModel) { resolver in
-            NonAlcoholicDrinksViewModel(networking: resolver.resolve(CocktailsNetworking.self)!) as any ItemListViewable
+            NonAlcoholicDrinksViewModel(drinksRepository: resolver.resolve(DrinksRepository.self)!) as any ItemListViewable
         }
         
         Container.shared.register((any SelectedItem).self, name: RegistrationName.selectedItemViewModel) { resolver in
-            SelectedItemViewModel(networking: resolver.resolve(CocktailsNetworking.self)!)
+            SelectedItemViewModel()
         }
         
         Container.shared.register((any ItemListViewable).self, name: RegistrationName.favoriteDrinksViewModel) { resolver in
             FavoriteDrinksViewModel() as any ItemListViewable
+        }
+        
+        Container.shared.register(DrinksRepository.self) { resolver in
+            DrinksRepository()
         }
         
         //MARK: Bind all the views, including the selectedItemView and ItemListView

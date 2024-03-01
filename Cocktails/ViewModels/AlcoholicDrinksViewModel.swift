@@ -1,38 +1,50 @@
 import Foundation
-import SwiftUI
 import ReusableComponents
+import InjectPropertyWrapper
+import RealmSwift
 
 class AlcoholicDrinksViewModel: ItemListViewable {
-    var networking: CocktailsNetworking?
-    
     var isLoading: Bool = true
     @Published var items: [Item] = []
+    private var drinksRepository: DrinksRepository
+    private var notificationToken: NotificationToken?
     
     //MARK: Dependency injection... Abstracts not concretes
-    init(networking: CocktailsNetworking) {
-        self.networking = networking
+    init(drinksRepository: DrinksRepository) {
+        //        self.networking = networking
+        self.drinksRepository = drinksRepository
         setUpData()
+        observeRealmChanges()
     }
     
     func setUpData() {
-        networking?.fetchJSON(drinkType: .alcoholic) { (result: Result<AlcoholicDrinks, NetworkError>) in
-            switch result {
-            case .success(let alcoholicDrinks):
-                DispatchQueue.main.async {
-                    self.items = alcoholicDrinks.drinks.map({ drink in
-                        Item( id: drink.idDrink,
-                              drinkName: drink.strDrink,
-                              glass: nil,
-                              instructions: nil,
-                              image: drink.strDrinkThumb,
-                              category: "Alcoholic",
-                              isFavorite: false)
-                    })
+        drinksRepository.fetchDrinks(drinktype: .alcoholic) { drinks in
+            self.items = drinks
+            self.isLoading = false
+        }
+    }
+    
+    private func observeRealmChanges() {
+        let realm = try! Realm()
+        let favouriteDrinks = realm.objects(FavoriteDrink.self)
+        notificationToken = favouriteDrinks.observe { [weak self] changes in
+            guard let self = self else { return }
+            switch changes {
+            case .initial, .update:
+                for drink in favouriteDrinks {
+                    if let drinkIndexFromRealm = self.items.firstIndex(where: {$0.drinkName.lowercased() == drink.drinkName.lowercased()}) {
+                        self.items[drinkIndexFromRealm] = Item(id: drink.id,
+                                                               drinkName: drink.drinkName,
+                                                               glass: drink.glass,
+                                                               instructions: drink.instructions,
+                                                               image: drink.image,
+                                                               category: drink.category,
+                                                               isFavorite: drink.isFavourite)
+                    }
                 }
-                self.isLoading = false
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.isLoading = false
+            case .error:
+                print("Error updating drinks")
+                break
             }
         }
     }

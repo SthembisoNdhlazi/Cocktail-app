@@ -4,20 +4,18 @@ import InjectPropertyWrapper
 import ReusableComponents
 
 protocol SelectedItem: ObservableObject {
-    var networking: CocktailsNetworking {get set}
     var selectedItem: Item? { get set }
     var favoriteDrink: FavoriteDrink { get set}
 }
 
 class SelectedItemViewModel: SelectedItem {
-    var networking: CocktailsNetworking
     @Published var selectedItem: Item?
     @Published var isLoading: Bool = false
     @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
     @Inject var realm: any Persistable
+    @Inject var drinksRepository: DrinksRepository
     
-    init(selectedItem: Item? = nil, networking: CocktailsNetworking) {
-        self.networking = networking
+    init(selectedItem: Item? = nil) {
         self.selectedItem = selectedItem
         if let selectedItem = self.selectedItem {
             self.setUpDrink(with: selectedItem)
@@ -36,20 +34,9 @@ class SelectedItemViewModel: SelectedItem {
     }
     
     private func fetchDrinkDetails(_ selectedDrink: Item) {
-        networking.fetchJSON(drinkType: .detailedDrink, specificDrinkID: selectedDrink.id) { (result: Result<SearchedDrinkDetails, NetworkError>) in
-            switch result {
-            case .success(let searchedDrink):
-                if let searchedDrink = searchedDrink.drinks.first {
-                    self.selectedItem = Item(id: searchedDrink.idDrink,
-                                             drinkName: searchedDrink.strDrink,
-                                             glass: searchedDrink.strGlass,
-                                             instructions: searchedDrink.strInstructions,
-                                             image: searchedDrink.strDrinkThumb,
-                                             category: searchedDrink.strCategory,
-                                             isFavorite: false)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
+        drinksRepository.fetchDrinks(drinktype: .detailedDrink, selectedDrinkID: selectedDrink.id) { item in
+            DispatchQueue.main.async {
+                self.selectedItem = item.first
             }
         }
     }

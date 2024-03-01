@@ -7,11 +7,10 @@ import ReusableComponents
 struct SingleItemView: ItemDetailView, View {
     
     @StateObject var selectedItemViewModel: SelectedItemViewModel
-    @Inject private var realm: any Persistable
     var selectedItem: Item
     
-    init (selectedItem: Item, networking: CocktailsNetworking? = nil) {
-        self._selectedItemViewModel = StateObject(wrappedValue: SelectedItemViewModel(selectedItem: selectedItem, networking: networking ?? CocktailsServiceCalls()))
+    init (selectedItem: Item) {
+        self._selectedItemViewModel = StateObject(wrappedValue: SelectedItemViewModel(selectedItem: selectedItem))
         self.selectedItem = selectedItem
     }
     
