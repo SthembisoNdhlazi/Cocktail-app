@@ -27,7 +27,6 @@ class SelectedItemViewModel: SelectedItem {
         self.isLoading = true
         if !(selectedDrink.isFavorite ?? false) {
             fetchDrinkDetails(selectedDrink)
-            
         } else {
             setupDrinkFromRealm(selectedDrink)
         }
@@ -42,15 +41,15 @@ class SelectedItemViewModel: SelectedItem {
     }
     
     private func setupDrinkFromRealm(_ selectedDrink: Item) {
-        self.favoriteDrink.drinkName = selectedDrink.drinkName
-        self.favoriteDrink.isFavourite = true
-        self.favoriteDrink.image = selectedDrink.image
-        self.favoriteDrink.category = selectedDrink.category
-        self.favoriteDrink.glass = selectedDrink.glass
-        self.favoriteDrink.instructions = selectedDrink.instructions
+        self.favoriteDrink = FavoriteDrink(id: selectedDrink.id, 
+                                           drinkName: selectedDrink.drinkName,
+                                           glass: selectedDrink.glass,
+                                           instructions: selectedDrink.instructions,
+                                           image: selectedDrink.image,
+                                           category: selectedDrink.category,
+                                           isFavourite: true)
     }
     
-    //MARK: Move logic to selectedDrinkViewModel
     private func persistItem() {
         setUpFavoriteDrink()
         selectedItem?.isFavorite = true
