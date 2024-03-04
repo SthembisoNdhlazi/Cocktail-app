@@ -6,6 +6,8 @@ import ReusableComponents
 protocol SelectedItem: ObservableObject {
     var selectedItem: Item? { get set }
     var favoriteDrink: FavoriteDrink { get set}
+    var successSaving: Bool { get set }
+    var successRemoving: Bool { get set}
 }
 
 class SelectedItemViewModel: SelectedItem {
@@ -14,6 +16,8 @@ class SelectedItemViewModel: SelectedItem {
     @ObservedRealmObject var favoriteDrink: FavoriteDrink = FavoriteDrink()
     @Inject var realm: any Persistable
     @Inject var drinksRepository: DrinksRepository
+    @Published var successSaving: Bool = false
+    @Published var successRemoving: Bool = false
     
     init(selectedItem: Item? = nil) {
         self.selectedItem = selectedItem
@@ -57,6 +61,10 @@ class SelectedItemViewModel: SelectedItem {
         realm.save(object: favoriteDrink) { error in
             print(error)
         }
+        successSaving = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.successSaving = false
+        }
     }
     
     private func setUpFavoriteDrink() {
@@ -86,6 +94,10 @@ class SelectedItemViewModel: SelectedItem {
         selectedItem?.isFavorite = false
         realm.delete(object: favoriteDrink) { error in
             print(error)
+        }
+        successRemoving = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.successRemoving = false
         }
     }
 }

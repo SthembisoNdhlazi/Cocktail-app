@@ -33,7 +33,7 @@
       "location" : "https://github.com/realm/realm-swift.git",
       "state" : {
         "branch" : "master",
-        "revision" : "aea16af78a0bbfb2c964801becaecb9cade9335f"
+        "revision" : "a56145813ef5e7c4b5c5450fabfa1b1a098247b0"
       }
     },
     {
@@ -42,7 +42,7 @@
       "location" : "https://github.com/SthembisoNdhlazi/ReusableComponents",
       "state" : {
         "branch" : "main",
-        "revision" : "68e310745407c641ca2f04b72b5afbf0c2ef1169"
+        "revision" : "be40dbbbf9fda6323969990bcef1485cf4ad0a99"
       }
     },
     {

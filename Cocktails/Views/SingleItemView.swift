@@ -54,14 +54,15 @@ struct SingleItemView: ItemDetailView, View {
             }
             .navigationTitle(selectedDrink.drinkName)
             .scrollIndicators(.hidden)
-//            .overlay {
-//                if realm.showSuccessToast {
-//                    ToastView(image: "checkmark", message: "Your drink has been added to your favorites")
-//                }
-//                if realm.showRemoveToast {
-//                    ToastView(image: "checkmark", message: "Your drink has been removed from your favorites")
-//                }
-//            }
+            .blur(radius: selectedItemViewModel.successSaving || selectedItemViewModel.successRemoving ? 5.0 : 0)
+            .overlay {
+                if selectedItemViewModel.successSaving {
+                    SuccessView(message: "Your drink has been added to your favorites")
+                } else if selectedItemViewModel.successRemoving {
+                    SuccessView(message: "Your drink has been removed from your favorites")
+                        .frame(width: 300, height: 250)
+                }
+            }
         } else {
             VStack {
                 ProgressView()
@@ -99,5 +100,6 @@ extension SingleItemView {
         .background(Color.black)
         .cornerRadius(25)
         .padding()
+        .disabled(selectedItemViewModel.successSaving || selectedItemViewModel.successRemoving)
     }
 }

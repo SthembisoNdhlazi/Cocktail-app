@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B815FA502B850DCA0092EC34 /* ReusableComponents in Frameworks */ = {isa = PBXBuildFile; productRef = B815FA4F2B850DCA0092EC34 /* ReusableComponents */; };
+		B821C00C2B960B1B0068E348 /* SideBarComponent in Frameworks */ = {isa = PBXBuildFile; productRef = B821C00B2B960B1B0068E348 /* SideBarComponent */; };
 		B836691B2B05DE9F00F9799B /* SelectedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B836691A2B05DE9F00F9799B /* SelectedItemViewModel.swift */; };
 		B84098642AF2D7F500034859 /* SideBarDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84098632AF2D7F500034859 /* SideBarDataProvider.swift */; };
 		B84D6DDC2B82467B003A63CE /* DependencyInjectionContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84D6DDB2B82467B003A63CE /* DependencyInjectionContainer.swift */; };
@@ -31,8 +32,6 @@
 		B8ADC1862AD29B1A005905C7 /* DrinkCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1852AD29B1A005905C7 /* DrinkCategories.swift */; };
 		B8ADC1882AD29C00005905C7 /* SingleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADC1872AD29BFF005905C7 /* SingleItemView.swift */; };
 		B8ADCC712AF117350092F466 /* NonAlcoholicDrinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8ADCC702AF117350092F466 /* NonAlcoholicDrinksViewModel.swift */; };
-		B8B77ED02B36BC780001B791 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */; };
-		B8B77ED22B36BF680001B791 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ED12B36BF680001B791 /* ToastView.swift */; };
 		B8B77ED62B43D4030001B791 /* RealmPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B77ED52B43D4030001B791 /* RealmPersistence.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,8 +74,6 @@
 		B8ADC1852AD29B1A005905C7 /* DrinkCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkCategories.swift; sourceTree = "<group>"; };
 		B8ADC1872AD29BFF005905C7 /* SingleItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemView.swift; sourceTree = "<group>"; };
 		B8ADCC702AF117350092F466 /* NonAlcoholicDrinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonAlcoholicDrinksViewModel.swift; sourceTree = "<group>"; };
-		B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
-		B8B77ED12B36BF680001B791 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		B8B77ED52B43D4030001B791 /* RealmPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPersistence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B821C00C2B960B1B0068E348 /* SideBarComponent in Frameworks */,
 				B84D6DE42B8317EF003A63CE /* InjectPropertyWrapper in Frameworks */,
 				B84D6DDF2B824AA7003A63CE /* Swinject in Frameworks */,
 				B815FA502B850DCA0092EC34 /* ReusableComponents in Frameworks */,
@@ -236,8 +234,6 @@
 			isa = PBXGroup;
 			children = (
 				B8ADC1872AD29BFF005905C7 /* SingleItemView.swift */,
-				B8B77ECF2B36BC780001B791 /* EmptyStateView.swift */,
-				B8B77ED12B36BF680001B791 /* ToastView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -284,6 +280,7 @@
 				B84D6DE02B824AA7003A63CE /* Swinject-Dynamic */,
 				B84D6DE32B8317EF003A63CE /* InjectPropertyWrapper */,
 				B815FA4F2B850DCA0092EC34 /* ReusableComponents */,
+				B821C00B2B960B1B0068E348 /* SideBarComponent */,
 			);
 			productName = Cocktails;
 			productReference = B8ADC14F2AD29A32005905C7 /* Cocktails.app */;
@@ -362,6 +359,7 @@
 				B84D6DDD2B824AA7003A63CE /* XCRemoteSwiftPackageReference "Swinject" */,
 				B84D6DE22B8317EF003A63CE /* XCRemoteSwiftPackageReference "InjectPropertyWrapper" */,
 				B815FA4E2B850DCA0092EC34 /* XCRemoteSwiftPackageReference "ReusableComponents" */,
+				B821C00A2B960B1B0068E348 /* XCRemoteSwiftPackageReference "SideBarComponent" */,
 			);
 			productRefGroup = B8ADC1502AD29A32005905C7 /* Products */;
 			projectDirPath = "";
@@ -405,14 +403,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8B77ED02B36BC780001B791 /* EmptyStateView.swift in Sources */,
 				B8ADC1532AD29A32005905C7 /* CocktailsApp.swift in Sources */,
 				B8ADC17E2AD29A67005905C7 /* CocktailsServiceCalls.swift in Sources */,
 				B85517B52B90722C00303024 /* DrinksRepository.swift in Sources */,
 				B8ADC1882AD29C00005905C7 /* SingleItemView.swift in Sources */,
 				B84098642AF2D7F500034859 /* SideBarDataProvider.swift in Sources */,
 				B8AA3F832ADEF83E003BA9E2 /* AlcoholicDrinksViewModel.swift in Sources */,
-				B8B77ED22B36BF680001B791 /* ToastView.swift in Sources */,
 				B8ADCC712AF117350092F466 /* NonAlcoholicDrinksViewModel.swift in Sources */,
 				B85E75F62B3410F200FAADB2 /* FavoriteDrink.swift in Sources */,
 				B8ADC1812AD29AAB005905C7 /* Models.swift in Sources */,
@@ -507,7 +503,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -561,7 +557,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -755,6 +751,14 @@
 				kind = branch;
 			};
 		};
+		B821C00A2B960B1B0068E348 /* XCRemoteSwiftPackageReference "SideBarComponent" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SthembisoNdhlazi/SideBarComponent";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
 		B84D6DDD2B824AA7003A63CE /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject.git";
@@ -786,6 +790,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B815FA4E2B850DCA0092EC34 /* XCRemoteSwiftPackageReference "ReusableComponents" */;
 			productName = ReusableComponents;
+		};
+		B821C00B2B960B1B0068E348 /* SideBarComponent */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B821C00A2B960B1B0068E348 /* XCRemoteSwiftPackageReference "SideBarComponent" */;
+			productName = SideBarComponent;
 		};
 		B84D6DDE2B824AA7003A63CE /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
